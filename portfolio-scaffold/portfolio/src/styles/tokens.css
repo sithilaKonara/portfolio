@@ -1,0 +1,464 @@
+/* ============================================================
+   DESIGN TOKENS — Obsidian Terminal
+   Source: design.md (Stitch export)
+   All values map 1:1 to the design system spec.
+   ============================================================ */
+
+/* Google Fonts import */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+/* ── Color Tokens ─────────────────────────────────────────── */
+:root {
+  /* Surfaces */
+  --color-background:                #0d1515;
+  --color-surface:                   #0d1515;
+  --color-surface-dim:               #0d1515;
+  --color-surface-bright:            #333b3b;
+  --color-surface-container-lowest:  #080f10;
+  --color-surface-container-low:     #151d1e;
+  --color-surface-container:         #192122;
+  --color-surface-container-high:    #232b2c;
+  --color-surface-container-highest: #2e3637;
+
+  /* On-surface text */
+  --color-on-surface:         #dce4e4;
+  --color-on-surface-variant: #b9cacb;
+  --color-inverse-surface:    #dce4e4;
+  --color-inverse-on-surface: #2a3232;
+
+  /* Outlines */
+  --color-outline:         #849495;
+  --color-outline-variant: #3a494b;
+
+  /* Primary — Electric Cyan */
+  --color-primary:              #e1fdff;
+  --color-on-primary:           #00363a;
+  --color-primary-container:    #00f2ff;
+  --color-on-primary-container: #006a71;
+  --color-inverse-primary:      #00696f;
+  --color-primary-fixed:        #74f5ff;
+  --color-primary-fixed-dim:    #00dbe7;
+  --color-on-primary-fixed:     #002022;
+  --color-on-primary-fixed-variant: #004f54;
+  --color-surface-tint:         #00dbe7;
+
+  /* Secondary — Neon Green */
+  --color-secondary:              #d7ffc5;
+  --color-on-secondary:           #053900;
+  --color-secondary-container:    #2ff801;
+  --color-on-secondary-container: #0f6d00;
+  --color-secondary-fixed:        #79ff5b;
+  --color-secondary-fixed-dim:    #2ae500;
+  --color-on-secondary-fixed:     #022100;
+  --color-on-secondary-fixed-variant: #095300;
+
+  /* Tertiary — Circuit Purple */
+  --color-tertiary:              #fff4fd;
+  --color-on-tertiary:           #520072;
+  --color-tertiary-container:    #f4ceff;
+  --color-on-tertiary-container: #9a00d2;
+  --color-tertiary-fixed:        #f8d8ff;
+  --color-tertiary-fixed-dim:    #ebb2ff;
+  --color-on-tertiary-fixed:     #320047;
+  --color-on-tertiary-fixed-variant: #74009f;
+
+  /* Error */
+  --color-error:              #ffb4ab;
+  --color-on-error:           #690005;
+  --color-error-container:    #93000a;
+  --color-on-error-container: #ffdad6;
+
+  /* Semantic aliases — use these in components */
+  --c-cyan:    var(--color-primary-fixed-dim);   /* #00dbe7 — active/interactive */
+  --c-green:   var(--color-secondary-fixed-dim); /* #2ae500 — success/OK */
+  --c-purple:  var(--color-tertiary-container);  /* #f4ceff — decorative/accent */
+  --c-red:     var(--color-error);               /* #ffb4ab — error/warning */
+  --c-surface: var(--color-surface-container);   /* #192122 — card backgrounds */
+
+  /* Glow — used for elevation via luminous outlines */
+  --glow-cyan:   #00f2ff22;
+  --glow-green:  #2ae50022;
+  --glow-purple: #ebb2ff22;
+}
+
+/* ── Typography Tokens ────────────────────────────────────── */
+:root {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Display — hero headings */
+  --text-display-size:    48px;
+  --text-display-weight:  800;
+  --text-display-lh:      1.1;
+  --text-display-ls:      -0.02em;
+
+  /* Display mobile */
+  --text-display-mobile-size:   32px;
+  --text-display-mobile-weight: 800;
+  --text-display-mobile-lh:     1.2;
+  --text-display-mobile-ls:     -0.02em;
+
+  /* Headline medium — section headings */
+  --text-headline-size:   24px;
+  --text-headline-weight: 600;
+  --text-headline-lh:     1.4;
+  --text-headline-ls:     -0.01em;
+
+  /* Body large */
+  --text-body-lg-size:   18px;
+  --text-body-lg-weight: 400;
+  --text-body-lg-lh:     1.6;
+
+  /* Body medium */
+  --text-body-md-size:   16px;
+  --text-body-md-weight: 400;
+  --text-body-md-lh:     1.6;
+
+  /* Code small — terminal content */
+  --text-code-sm-size:   14px;
+  --text-code-sm-weight: 400;
+  --text-code-sm-lh:     1.5;
+
+  /* Code XS — labels, metadata */
+  --text-code-xs-size:   12px;
+  --text-code-xs-weight: 500;
+  --text-code-xs-lh:     1.4;
+  --text-code-xs-ls:     0.05em;
+
+  /* Label caps — all-caps monospaced labels */
+  --text-label-size:   12px;
+  --text-label-weight: 700;
+  --text-label-lh:     1.2;
+  --text-label-ls:     0.1em;
+}
+
+/* ── Spacing Tokens ───────────────────────────────────────── */
+:root {
+  --space-1:  8px;   /* base unit */
+  --space-2:  16px;
+  --space-3:  24px;
+  --space-4:  32px;
+  --space-5:  40px;
+  --space-6:  48px;
+  --space-8:  64px;
+  --space-10: 80px;
+  --space-12: 96px;
+
+  --gutter:            24px;
+  --margin-desktop:    64px;
+  --margin-mobile:     20px;
+  --container-max:     1200px;
+  --grid-columns:      12;
+}
+
+/* ── Shape Tokens ─────────────────────────────────────────── */
+:root {
+  --radius-sm:   0.125rem;  /* 2px  — buttons, chips */
+  --radius:      0.25rem;   /* 4px  — default */
+  --radius-md:   0.375rem;  /* 6px  */
+  --radius-lg:   0.5rem;    /* 8px  — cards, terminal windows */
+  --radius-xl:   0.75rem;   /* 12px */
+  --radius-full: 9999px;    /* pill */
+}
+
+/* ── Elevation / Glassmorphism Tokens ─────────────────────── */
+:root {
+  --glass-bg:     rgba(25, 33, 34, 0.6);   /* surface-container at 60% */
+  --glass-blur:   20px;
+  --glass-border: 1px solid var(--color-outline-variant);
+
+  /* Luminous outline — higher elevation = cyan tint border */
+  --border-default:  1px solid var(--color-outline-variant);  /* #3a494b */
+  --border-elevated: 1px solid var(--color-outline);          /* #849495 */
+  --border-active:   1px solid var(--c-cyan);                 /* #00dbe7 */
+
+  /* Z-index scale */
+  --z-base:    0;
+  --z-raised:  10;
+  --z-overlay: 100;
+  --z-nav:     200;
+  --z-modal:   300;
+}
+
+/* ── Background Grid Texture ──────────────────────────────── */
+:root {
+  /* 32px square grid at 5% opacity — applied to body */
+  --grid-texture: url("data:image/svg+xml,%3Csvg width='32' height='32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M32 0H0v32' fill='none' stroke='%23dce4e4' stroke-width='0.5' stroke-opacity='0.05'/%3E%3C/svg%3E");
+}
+
+/* ── Animation Tokens ─────────────────────────────────────── */
+:root {
+  --transition-fast:   150ms ease;
+  --transition-base:   250ms ease;
+  --transition-slow:   400ms ease;
+  --transition-spring: 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Pulsing dot — used for status indicators */
+  --pulse-duration: 2s;
+}
+
+/* ── Global Reset & Base ──────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-md-size);
+  font-weight: var(--text-body-md-weight);
+  line-height: var(--text-body-md-lh);
+  color: var(--color-on-surface);
+  background-color: var(--color-background);
+  background-image: var(--grid-texture);
+  min-height: 100vh;
+}
+
+/* ── Typography Utility Classes ───────────────────────────── */
+.text-display {
+  font-family: var(--font-sans);
+  font-size: var(--text-display-size);
+  font-weight: var(--text-display-weight);
+  line-height: var(--text-display-lh);
+  letter-spacing: var(--text-display-ls);
+  color: var(--color-on-surface);
+}
+
+.text-headline {
+  font-family: var(--font-sans);
+  font-size: var(--text-headline-size);
+  font-weight: var(--text-headline-weight);
+  line-height: var(--text-headline-lh);
+  letter-spacing: var(--text-headline-ls);
+  color: var(--color-on-surface);
+}
+
+.text-body-lg {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-lg-size);
+  font-weight: var(--text-body-lg-weight);
+  line-height: var(--text-body-lg-lh);
+  color: var(--color-on-surface-variant);
+}
+
+.text-mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-code-sm-size);
+  font-weight: var(--text-code-sm-weight);
+  line-height: var(--text-code-sm-lh);
+  color: var(--color-on-surface-variant);
+}
+
+.text-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-label-size);
+  font-weight: var(--text-label-weight);
+  line-height: var(--text-label-lh);
+  letter-spacing: var(--text-label-ls);
+  text-transform: uppercase;
+  color: var(--color-on-surface-variant);
+}
+
+.text-cyan  { color: var(--c-cyan); }
+.text-green { color: var(--c-green); }
+
+/* ── Layout Utilities ─────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--margin-desktop);
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding-inline: var(--margin-mobile);
+  }
+
+  .text-display {
+    font-size: var(--text-display-mobile-size);
+    letter-spacing: var(--text-display-mobile-ls);
+  }
+}
+
+/* ── Component: Status Badge ──────────────────────────────── */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 4px 10px;
+  border: var(--border-default);
+  border-radius: var(--radius-full);
+  font-family: var(--font-mono);
+  font-size: var(--text-label-size);
+  font-weight: var(--text-label-weight);
+  letter-spacing: var(--text-label-ls);
+  text-transform: uppercase;
+  color: var(--color-on-surface-variant);
+  background: var(--color-surface-container-low);
+}
+
+.status-badge .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--c-green);
+  animation: pulse var(--pulse-duration) ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+/* ── Component: Terminal Card ─────────────────────────────── */
+.terminal-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.terminal-card:hover {
+  border-color: var(--color-outline);
+  box-shadow: 0 0 0 1px var(--glow-cyan), 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.terminal-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 10px var(--space-2);
+  background: var(--color-surface-container-high);
+  border-bottom: var(--border-default);
+}
+
+.terminal-card__controls {
+  display: flex;
+  gap: 6px;
+}
+
+.terminal-card__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-full);
+}
+.terminal-card__dot--red    { background: #ff5f56; }
+.terminal-card__dot--yellow { background: #ffbd2e; }
+.terminal-card__dot--green  { background: #27c93f; }
+
+.terminal-card__title {
+  font-family: var(--font-mono);
+  font-size: var(--text-code-xs-size);
+  color: var(--color-on-surface-variant);
+  margin-left: var(--space-1);
+}
+
+.terminal-card__body {
+  padding: var(--space-3);
+}
+
+/* ── Component: Buttons ───────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--text-label-size);
+  font-weight: var(--text-label-weight);
+  letter-spacing: var(--text-label-ls);
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  transition: box-shadow var(--transition-fast), background var(--transition-fast);
+}
+
+/* Primary — solid cyan */
+.btn-primary {
+  background: var(--c-cyan);
+  color: var(--color-on-primary);
+}
+.btn-primary:hover {
+  box-shadow: 0 0 0 4px var(--glow-cyan), 0 0 16px var(--glow-cyan);
+}
+
+/* Ghost — outline cyan */
+.btn-ghost {
+  background: transparent;
+  color: var(--c-cyan);
+  border: 1px solid var(--c-cyan);
+}
+.btn-ghost:hover {
+  background: rgba(0, 219, 231, 0.05);
+  box-shadow: 0 0 0 2px var(--glow-cyan);
+}
+
+/* ── Component: Tech Chip ─────────────────────────────────── */
+.chip {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 0;                          /* sharp rectangle — data-chip look */
+  border: 1px solid var(--color-outline-variant);
+  background: var(--color-surface-container-low);
+  font-family: var(--font-mono);
+  font-size: var(--text-code-xs-size);
+  font-weight: var(--text-code-xs-weight);
+  letter-spacing: var(--text-code-xs-ls);
+  color: var(--color-on-surface-variant);
+  text-transform: uppercase;
+}
+
+.chip--cyan   { border-color: var(--c-cyan);   color: var(--c-cyan); }
+.chip--green  { border-color: var(--c-green);  color: var(--c-green); }
+.chip--purple { border-color: var(--color-tertiary-fixed-dim); color: var(--color-tertiary-fixed-dim); }
+
+/* ── Component: Input Fields ──────────────────────────────── */
+.input {
+  width: 100%;
+  padding: 10px 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--color-outline-variant);
+  color: var(--color-on-surface);
+  font-family: var(--font-mono);
+  font-size: var(--text-code-sm-size);
+  outline: none;
+  transition: border-color var(--transition-base);
+}
+
+.input::placeholder {
+  color: var(--color-outline);
+}
+
+.input:focus {
+  border-bottom-color: var(--c-cyan);
+}
+
+/* ── Component: Section Divider ───────────────────────────── */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-outline-variant);
+}

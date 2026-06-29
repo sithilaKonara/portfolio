@@ -1,0 +1,94 @@
+# .github/workflows/fetch-posts.yml
+# Runs daily at 06:00 UTC (08:00 Helsinki time).
+# Fetches your Medium RSS feed, converts it to posts.json,
+# and commits it back to the repo — which triggers a CF Pages deploy.
+
+name: Fetch Medium Posts
+
+on:
+  schedule:
+    - cron: '0 6 * * *'   # daily at 06:00 UTC
+  workflow_dispatch:        # also allow manual trigger from GH UI
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write       # needed to commit posts.json back
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Fetch & parse Medium RSS
+        env:
+          MEDIUM_USERNAME: ${{ secrets.MEDIUM_USERNAME }}   # set in GH repo secrets
+        run: |
+          python3 - <<'EOF'
+          import json, re, urllib.request, xml.etree.ElementTree as ET
+          from datetime import datetime
+
+          username = "${{ env.MEDIUM_USERNAME }}"
+          url = f"https://medium.com/feed/@{username}"
+
+          with urllib.request.urlopen(url, timeout=15) as r:
+              tree = ET.parse(r)
+
+          ns = {
+              'content': 'http://purl.org/rss/1.0/modules/content/',
+              'dc':      'http://purl.org/dc/elements/1.1/',
+              'media':   'http://search.yahoo.com/mrss/',
+          }
+
+          posts = []
+          for item in tree.findall('.//item'):
+              # Extract thumbnail from content:encoded or media:thumbnail
+              thumbnail = None
+              content_encoded = item.findtext('content:encoded', namespaces=ns) or ''
+              img_match = re.search(r'<img[^>]+src="([^"]+)"', content_encoded)
+              if img_match:
+                  thumbnail = img_match.group(1)
+
+              # Extract plain-text excerpt from content
+              plain = re.sub(r'<[^>]+>', '', content_encoded)
+              excerpt = plain.strip()[:200].rsplit(' ', 1)[0] + '…' if len(plain) > 200 else plain.strip()
+
+              # Parse categories
+              categories = [c.text for c in item.findall('category') if c.text]
+              primary_cat = categories[0].upper() if categories else 'DEVOPS'
+
+              # Format date
+              pub_raw = item.findtext('pubDate') or ''
+              try:
+                  dt = datetime.strptime(pub_raw, '%a, %d %b %Y %H:%M:%S %Z')
+                  pub_date = dt.strftime('%m.%d.%Y')
+              except Exception:
+                  pub_date = pub_raw[:10]
+
+              posts.append({
+                  'title':     item.findtext('title') or '',
+                  'link':      item.findtext('link') or '',
+                  'pubDate':   pub_date,
+                  'category':  primary_cat,
+                  'excerpt':   excerpt,
+                  'thumbnail': thumbnail,
+                  'guid':      item.findtext('guid') or '',
+              })
+
+          with open('src/data/posts.json', 'w') as f:
+              json.dump(posts, f, indent=2, ensure_ascii=False)
+
+          print(f"✓ Wrote {len(posts)} posts to src/data/posts.json")
+          EOF
+
+      - name: Commit posts.json if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/data/posts.json
+          if git diff --cached --quiet; then
+            echo "No changes to posts.json — skipping commit."
+          else
+            git commit -m "chore: update Medium posts [skip ci]"
+            git push
+          fi
