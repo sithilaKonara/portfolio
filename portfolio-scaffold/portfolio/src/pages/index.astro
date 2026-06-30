@@ -1,0 +1,185 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navigation from "../components/Navigation.astro";
+import Footer from "../components/Footer.astro";
+import GlassPanel from "../components/GlassPanel.astro";
+import TerminalHeader from "../components/TerminalHeader.astro";
+import StatusBadge from "../components/StatusBadge.astro";
+---
+<Layout title="Sithila Konara | Cloud DevOps SRE">
+   <Navigation currentPage="/" />
+   <div class="pt-32 pb-24 px-margin_mobile md:px-margin_desktop max-w-container_max_width mx-auto">
+      <!-- Hero Section --> 
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-32">
+         <div class="lg:col-span-7 space-y-8">
+            <StatusBadge label="Status: Open to Opportunities" />
+            <h1 class="font-display text-display text-white max-w-2xl"> 
+               Sithila <span class="text-primary-container">Konara</span> 
+            </h1>
+            <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl"> 
+               IT professional in Cloud / DevOps / Platform / SRE domains with experience architecting and operating distributed, mission-critical systems. Passionate about building self-service platforms, automating away toil, driving FinOps (30% cost savings), and embedding security—all while maintaining 99%+ availability at scale. 
+            </p>
+            <div class="flex flex-wrap gap-4 items-center">
+            <!-- Primary CTA -->
+            <a 
+               href="mailto:kmsithila@gmail.com" 
+               class="px-8 py-3 bg-primary-container text-background font-label-caps text-label-caps rounded-sm hover:shadow-[0_0_20px_rgba(0,242,255,0.4)] transition-all inline-block text-center"
+            >
+               CONNECT WITH ME
+            </a>
+
+            <!-- LinkedIn -->
+            <a 
+               href="https://www.linkedin.com/in/sithila-konara/" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               class="px-6 py-3 border border-primary-container/50 text-primary-container font-label-caps text-label-caps rounded-sm hover:bg-primary-container/10 transition-all inline-flex items-center gap-2"
+            >
+               <span class="material-symbols-outlined text-sm">link</span>
+               LinkedIn
+            </a>
+
+            <!-- Medium -->
+            <a 
+               href="https://medium.com/@sithila_92123" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               class="px-6 py-3 border border-secondary-container/50 text-secondary-container font-label-caps text-label-caps rounded-sm hover:bg-secondary-container/10 transition-all inline-flex items-center gap-2"
+            >
+               <span class="material-symbols-outlined text-sm">article</span>
+               Medium
+            </a>
+            </div>
+         </div>
+         <!-- Terminal Component --> 
+         <div class="lg:col-span-5">
+            <GlassPanel class="rounded-lg overflow-hidden shadow-2xl relative">
+               <TerminalHeader label="root@sithila-profile: ~" />
+               <div class="p-6 font-code-sm text-code-sm text-secondary-container space-y-2 relative min-h-[280px]">
+                  <div class="scanline"></div>
+                  <p class="flex items-center gap-2">
+                     <span class="text-primary-container">❯</span> 
+                     Loading Sithila_Konara.profile...
+                  </p>
+                  <p class="flex items-center gap-2">
+                     <span class="text-primary-container">❯</span> 
+                     Location: Turku, Finland 
+                     <span class="text-secondary-fixed-dim">[OK]</span>
+                  </p>
+                  <p class="flex items-center gap-2">
+                     <span class="text-primary-container">❯</span> 
+                     Domains: Cloud/DevOps/Platform/SRE 
+                     <span class="text-secondary-fixed-dim">[OK]</span>
+                  </p>
+                  <p class="flex items-center gap-2">
+                     <span class="text-primary-container">❯</span>
+                     Platform: Secure,Scalable,Auto-Healing
+                     <span class="text-secondary-fixed-dim">[OK]</span>
+                  </p>
+                  <p class="flex items-center gap-2">
+                     <span class="text-primary-container">❯</span> 
+                     Observability: Performance/Cost 
+                     <span class="text-secondary-fixed-dim">[OK]</span>
+                  </p>
+                  <p class="flex items-center gap-2"></p>
+                  <br /> 
+                  <p class="text-primary typewriter">
+                     <span>Status: Open to Opportunities_</span>
+                  </p>
+               </div>
+            </GlassPanel>
+         </div>
+      </section>
+      <!-- Skill Badges --> 
+      <section class="mb-32">
+         <div class="flex flex-col md:flex-row items-center gap-6 mb-12">
+            <h2 class="font-label-caps text-label-caps text-on-surface-variant whitespace-nowrap">TECH_STACK // CORE_COMPETENCIES</h2>
+            <div class="h-px w-full bg-outline-variant/30"></div>
+         </div>
+         <div class="flex flex-wrap gap-4 justify-center md:justify-start"> 
+            {["AWS/GCP", "Terraform", "Kubernetes", "Python/Bash", "FinOps", "CI/CD"].map((skill, i) => ( <div class={`px-6 py-4 glass-panel border-${i % 2 === 0 ? 'primary-container' : 'secondary-container'}/20 flex flex-col gap-2 min-w-[140px] group hover:border-${i % 2 === 0 ? 'primary-container' : 'secondary-container'} transition-all cursor-default`}> <span class={`font-code-xs text-code-xs text-${i % 2 === 0 ? 'primary-container' : 'secondary-container'} opacity-50`}> ENGINEER_{String(i + 1).padStart(2, '0')} </span> <span class="font-code-sm text-code-sm font-bold">{skill}</span> 
+         </div>
+         ))} 
+   </div>
+   </section> 
+   <!-- Articles Section --> 
+   <section class="mb-32">
+      <div class="flex justify-between items-end mb-12">
+         <div class="space-y-2">
+            <h2 class="font-headline-md text-headline-md text-white">Latest Writings</h2>
+            <p class="font-code-xs text-code-xs text-on-surface-variant">FIELD_NOTES.DAT</p>
+         </div>
+         <a class="text-primary-container font-label-caps text-label-caps flex items-center gap-2 hover:translate-x-1 transition-transform" href="/articles"> READ_ALL 
+         <span class="material-symbols-outlined text-sm">arrow_forward</span> 
+         </a> 
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+         <!-- Card 1 --> 
+         <div class="glass-panel group cursor-pointer hover:bg-surface-container-high transition-all">
+            <div class="h-48 overflow-hidden relative">
+               <div class="absolute inset-0 bg-gradient-to-t from-background to-transparent z-10"></div>
+               <div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAJMN9n6ahofSeaxccO-QjwgccMLtBYjeR8vL_gi5-yO4vV4IWyTE7m2tox8RnVpgY-XSCGpHkTxpPT3nEdTt94fWv_ET1hdAtyES57aNN-NfEtxZkrxe9XFOCuqooQHC7VpaLTCCaQChngc_BRCEuyVaGyDO4ImglFo9U_eU8oEAmqzTT7k43HRdbMKgRh6XusLOguAhAs_8TJwZnrfEvGzfjnV7pZgONd89xzH9lD3M6ZNq_ZBiVwicKo-7Q1qc2g2BdMJxfqnQw')">
+               </div>
+            </div>
+            <div class="p-6 space-y-4">
+               <div class="flex justify-between items-center"> 
+                  <span class="font-code-xs text-code-xs text-secondary-container px-2 py-0.5 border border-secondary-container/30">FINCOPS</span> 
+                  <span class="font-code-xs text-code-xs text-on-surface-variant">06.2024</span> 
+               </div>
+               <h3 class="font-headline-md text-headline-md leading-tight text-white group-hover:text-primary-container transition-colors">Cloud Cost Optimization Strategies</h3>
+               <p class="text-on-surface-variant text-sm line-clamp-2">Reducing monthly cloud spend by 30% through FinOps initiatives and proactive resource management.</p>
+            </div>
+         </div>
+         <!-- Card 2 --> 
+         <div class="glass-panel group cursor-pointer hover:bg-surface-container-high transition-all">
+            <div class="h-48 overflow-hidden relative">
+               <div class="absolute inset-0 bg-gradient-to-t from-background to-transparent z-10"></div>
+               <div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDVpa3iPXPc1BMPMWJ3QYdkROjC_2jhIgex5SnnfcaQcZo8Zfra03Kcgn7Hnnbaj7YpkupMS3Sw_wB5VikXeFMJ-5hpZ0W94VL0sxBnYoWYj0wFYoek0QQ1BVnLOVSk6c3ORSG3Iib3vKmR5i6mMh48ps-Un1vJF9GLPq80sOg_INmkvQPajJlJbPvzGzTT1mfVzhbpn-3leWMCoH_qooUWKJxDTO_NUpvXzTAtKabqvPRnMXj2GhRgtExmftz-9Zt-oeP4OJXOkHU')"></div>
+            </div>
+            <div class="p-6 space-y-4">
+               <div class="flex justify-between items-center"> <span class="font-code-xs text-code-xs text-primary-container px-2 py-0.5 border border-primary-container/30">OBSERVABILITY</span> <span class="font-code-xs text-code-xs text-on-surface-variant">04.2024</span> </div>
+               <h3 class="font-headline-md text-headline-md leading-tight text-white group-hover:text-primary-container transition-colors">Building SLOs for Distributed Systems</h3>
+               <p class="text-on-surface-variant text-sm line-clamp-2">Setting up observability standards with CloudWatch metrics, custom dashboards, and alarm-based alerting.</p>
+            </div>
+         </div>
+         <!-- Card 3 --> 
+         <div class="glass-panel group cursor-pointer hover:bg-surface-container-high transition-all">
+            <div class="h-48 overflow-hidden relative">
+               <div class="absolute inset-0 bg-gradient-to-t from-background to-transparent z-10"></div>
+               <div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDWphwu0R3d10hA1NOGjAsUsH1rnjPN_iPaMXxkgh9rBjEU-XGKc2HFWZEE4My_kpaXiw_mfJkBVA1hbC8NHy6aFsDqE11yLjZiGCYBmV531otnih18h3I5XNuXb2fIMVtx3-sZaR3U9xqq-oDog1Ooz45cvn2qBIcs_fvcLpHKgqcahKHNJBjN2vyzu0SyNNQ29sdnaNQlHcMWVc8kOW6tub38LwOyY8mm_ykKpbKVHKtqEu0ULkgBuUeWirXDz85ZAbB9zSgIMYI')"></div>
+            </div>
+            <div class="p-6 space-y-4">
+               <div class="flex justify-between items-center"> <span class="font-code-xs text-code-xs text-secondary-container px-2 py-0.5 border border-secondary-container/30">AUTOMATION</span> <span class="font-code-xs text-code-xs text-on-surface-variant">02.2024</span> </div>
+               <h3 class="font-headline-md text-headline-md leading-tight text-white group-hover:text-primary-container transition-colors">Automating Infrastructure at Scale</h3>
+               <p class="text-on-surface-variant text-sm line-clamp-2">Reducing engineering toil by 35% with self-service tools and Python automation across hybrid environments.</p>
+            </div>
+         </div>
+      </div>
+   </section>
+   <!-- CTA Section --> 
+   <section class="glass-panel p-12 text-center relative overflow-hidden">
+      <div class="absolute top-0 left-0 w-full h-1 bg-primary-container opacity-20"></div>
+      <div class="relative z-10 space-y-8">        
+        <h2 class="font-display text-display text-white max-w-2xl mx-auto"> 
+          Architecting <span class="text-primary-container">Resilient</span> 
+          Cloud Infrastructure with <span class="text-primary-container">Automation</span> 
+          and <span class="text-primary-container">Observability</span>.
+        </h2>
+         <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl mx-auto"> Currently open to Cloud, DevOps, Platform and SRE opportunities. Let's build something reliable together. </p>
+         <div class="flex flex-col sm:flex-row justify-center gap-6 pt-4"> 
+            <a 
+            href="mailto:kmsithila@gmail.com" 
+            class="px-12 py-4 bg-primary-container text-background font-label-caps text-label-caps rounded-sm hover:glow-cyan transition-all flex items-center justify-center gap-2"
+            >
+            <span class="material-symbols-outlined">terminal</span> 
+            CONNECT WITH ME
+            </a> 
+         </div>
+      </div>
+      <!-- Decorative elements --> 
+      <div class="absolute -bottom-12 -right-12 w-64 h-64 bg-primary-container/10 blur-[100px] rounded-full"></div>
+      <div class="absolute -top-12 -left-12 w-64 h-64 bg-secondary-container/10 blur-[100px] rounded-full"></div>
+   </section>
+   </div> 
+   <Footer />
+</Layout>

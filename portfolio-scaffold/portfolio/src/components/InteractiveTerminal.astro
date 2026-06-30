@@ -1,0 +1,446 @@
+---
+// InteractiveTerminal.astro
+// This component is self-contained – no external dependencies
+---
+
+<div class="terminal-wrapper">
+  <div class="terminal-container" id="terminalContainer">
+    <!-- Terminal Header -->
+    <div class="terminal-header">
+      <div class="terminal-dots">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+      </div>
+      <span class="terminal-title">sithila@portfolio:~</span>
+    </div>
+    
+    <!-- Terminal Body -->
+    <div class="terminal-body" id="terminalBody">
+      <div class="output" id="output">
+        <div class="line">
+          <span class="prompt">❯</span>
+          <span class="text-secondary-container">Welcome to Sithila's interactive terminal!</span>
+        </div>
+        <div class="line">
+          <span class="prompt">❯</span>
+          <span class="text-secondary-container">Type <span class="text-primary-container">'help'</span> to see available commands.</span>
+        </div>
+        <div class="line"></div>
+        <div class="line">
+          <span class="prompt">❯</span>
+          <span class="text-primary-container typewriter">Ready for input_</span>
+        </div>
+      </div>
+      
+      <!-- Input Area -->
+      <div class="input-area">
+        <span class="prompt">❯</span>
+        <input 
+          type="text" 
+          id="terminalInput" 
+          class="terminal-input" 
+          autofocus
+          placeholder="Enter a command..."
+          autocomplete="off"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .terminal-wrapper {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .terminal-container {
+    background: rgba(10, 10, 20, 0.95);
+    border-radius: 12px;
+    border: 1px solid rgba(0, 242, 255, 0.2);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 242, 255, 0.05);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    cursor: text;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  
+  .terminal-container:hover {
+    border-color: rgba(0, 242, 255, 0.4);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 60px rgba(0, 242, 255, 0.08);
+  }
+  
+  .terminal-header {
+    background: rgba(20, 20, 40, 0.9);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .terminal-dots {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  
+  .dot.red { background: #ff5f56; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #27c93f; }
+  
+  .terminal-title {
+    color: rgba(255, 255, 255, 0.5);
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    margin-left: 8px;
+  }
+  
+  .terminal-body {
+    padding: 20px 24px;
+    min-height: 400px;
+    max-height: 500px;
+    overflow-y: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #c0caf5;
+  }
+  
+  .terminal-body::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .terminal-body::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+  
+  .terminal-body::-webkit-scrollbar-thumb {
+    background: rgba(0, 242, 255, 0.3);
+    border-radius: 3px;
+  }
+  
+  .terminal-body::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 242, 255, 0.5);
+  }
+  
+  .line {
+    margin-bottom: 4px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .prompt {
+    color: #00f2ff;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+  
+  .text-white {
+    color: #ffffff;
+  }
+  
+  .text-primary-container {
+    color: #00f2ff;
+  }
+  
+  .text-secondary-container {
+    color: #7aa2f7;
+  }
+  
+  .typewriter {
+    animation: blink 1s step-end infinite;
+  }
+  
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  
+  .input-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .terminal-input {
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    flex: 1;
+    outline: none;
+    padding: 4px 0;
+  }
+  
+  .terminal-input::placeholder {
+    color: rgba(255, 255, 255, 0.2);
+  }
+  
+  /* Scanline effect */
+  .terminal-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 242, 255, 0.01) 2px,
+      rgba(0, 242, 255, 0.01) 4px
+    );
+    border-radius: 12px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 640px) {
+    .terminal-body {
+      padding: 16px;
+      min-height: 300px;
+      max-height: 400px;
+      font-size: 12px;
+    }
+    
+    .terminal-title {
+      font-size: 11px;
+    }
+    
+    .terminal-input {
+      font-size: 12px;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    // Wait for the DOM to be ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+    
+    function init() {
+      const input = document.getElementById('terminalInput');
+      const output = document.getElementById('output');
+      const terminalBody = document.getElementById('terminalBody');
+      
+      if (!input || !output) return;
+      
+      let commandHistory = [];
+      let historyIndex = -1;
+      
+      // Command definitions
+      const commands = {
+        help: `
+  Available commands:
+    whoami      - About me
+    experience  - Work experience summary
+    skills      - Core competencies
+    certs       - Certifications
+    education   - Education background
+    contact     - Get in touch
+    clear       - Clear terminal
+    status      - Current availability
+    blog        - Latest writings
+  `,
+        
+        whoami: `
+  👤 Sithila Konara
+  Cloud DevOps & Platform SRE Engineer
+  📍 Turku, Finland
+  ⚡ 7+ years in the industry
+  🏗️ Building resilient, self-healing distributed systems
+  `,
+        
+        experience: `
+  💼 Experience Summary:
+  
+  🔹 HCLTECH (2024 - Present)
+     Site Reliability Engineer
+     - SRE support for global, high-traffic web applications
+     - Built self-service tools reducing team toil by 30%
+  
+  🔹 PEARSON (2022 - 2023)
+     Associate Technical Specialist
+     - Architected scalable AWS cloud infrastructure
+     - Drove FinOps initiatives: 30% cost reduction
+  
+  🔹 PEARSON (2018 - 2022)
+     Senior System Engineer
+     - Managed 3000+ hybrid servers with 99% availability
+     - Automated patching: 90% success rate
+  
+  🔹 INVOLVE 360 (2016 - 2018)
+     Infrastructure Management Engineer
+     - NOC support for MSPs across US, UK, Australia, Canada
+  `,
+        
+        skills: `
+  🛠️ Core Competencies:
+  
+  ☁️  Cloud Platforms: AWS, GCP
+  📦  Container Orchestration: Kubernetes, Docker
+  🏗️  Infrastructure as Code: Terraform, Ansible
+  🔧  Automation: Python, Bash, GitHub Actions
+  🔐  Security: IAM, Zero-Trust, Least-Privilege Access
+  📊  Observability: Monitoring, Dashboards, SLO Tracking
+  💰  FinOps: Cost Optimization, Resource Visibility
+  `,
+        
+        certs: `
+  📜 Certifications:
+  
+  ✅ AWS Certified Solution Architect - Associate
+  ✅ HashiCorp Certified: Terraform Associate (002)
+  ✅ Red Hat Certified Engineer (RHCE)
+  `,
+        
+        education: `
+  🎓 Education:
+  
+  📚 Master of Information Security (MIS)
+     University of Colombo School of Computing (2020)
+  
+  🎓 BSc Special (Hons) in Information Technology
+     Sri Lanka Institute of Information Technology (2014)
+  `,
+        
+        contact: `
+  📬 Connect with me:
+  
+  📧 Email: kmsithila@gmail.com
+  📱 Phone: +358 417 241 555
+  📍 Location: Turku, Finland
+  
+  🔗 LinkedIn: https://www.linkedin.com/in/sithila-konara/
+  💻 GitHub: https://github.com/sithilaKonara
+  `,
+        
+        status: `
+  🟢 STATUS: OPEN TO OPPORTUNITIES
+  
+  Currently seeking:
+    • Senior SRE Roles
+    • Cloud DevOps Positions  
+    • Platform Engineering Lead
+  
+  Ready to build resilient systems at scale!
+  `,
+        
+        blog: `
+  📝 Latest Writings:
+  
+  🔹 Cloud Cost Optimization Strategies (Jun 2024)
+  🔹 Building SLOs for Distributed Systems (Apr 2024)
+  🔹 Automating Infrastructure at Scale (Feb 2024)
+  
+  → Read all: /articles
+  `
+      };
+      
+      function executeCommand(command) {
+        // Remove the typewriter cursor line (last line)
+        const lastLine = output.lastElementChild;
+        if (lastLine && lastLine.querySelector('.typewriter')) {
+          lastLine.remove();
+        }
+        
+        // Add the command line
+        const cmdLine = document.createElement('div');
+        cmdLine.className = 'line';
+        cmdLine.innerHTML = `<span class="prompt">❯</span> <span class="text-white">${command}</span>`;
+        output.appendChild(cmdLine);
+        
+        // Add the response
+        const respLine = document.createElement('div');
+        respLine.className = 'line';
+        
+        if (command === 'clear') {
+          output.innerHTML = '';
+          // Add a fresh prompt
+          const promptLine = document.createElement('div');
+          promptLine.className = 'line';
+          promptLine.innerHTML = `<span class="prompt">❯</span> <span class="text-primary-container typewriter">Ready for input_</span>`;
+          output.appendChild(promptLine);
+          terminalBody.scrollTop = terminalBody.scrollHeight;
+          return;
+        }
+        
+        const response = commands[command] || `Command not found: "${command}". Type 'help' for available commands.`;
+        respLine.innerHTML = `<span class="text-secondary-container" style="white-space: pre-wrap;">${response}</span>`;
+        output.appendChild(respLine);
+        
+        // Add the prompt for next command
+        const newPrompt = document.createElement('div');
+        newPrompt.className = 'line';
+        newPrompt.innerHTML = `<span class="prompt">❯</span> <span class="text-primary-container typewriter">Ready for input_</span>`;
+        output.appendChild(newPrompt);
+        
+        // Scroll to bottom
+        terminalBody.scrollTop = terminalBody.scrollHeight;
+      }
+      
+      // Focus input on click anywhere in terminal
+      const terminalContainer = document.getElementById('terminalContainer');
+      if (terminalContainer) {
+        terminalContainer.addEventListener('click', () => {
+          input.focus();
+        });
+      }
+      
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          const command = input.value.trim().toLowerCase();
+          if (command) {
+            commandHistory.push(command);
+            historyIndex = commandHistory.length;
+            executeCommand(command);
+          }
+          input.value = '';
+          // Auto-scroll
+          terminalBody.scrollTop = terminalBody.scrollHeight;
+        }
+        
+        // Command history (up/down arrows)
+        if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          if (historyIndex > 0) {
+            historyIndex--;
+            input.value = commandHistory[historyIndex];
+          }
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (historyIndex < commandHistory.length - 1) {
+            historyIndex++;
+            input.value = commandHistory[historyIndex];
+          } else {
+            historyIndex = commandHistory.length;
+            input.value = '';
+          }
+        }
+      });
+      
+      // Ensure the initial prompt is always present
+      // (In case of any unexpected removal)
+    }
+  })();
+</script>
