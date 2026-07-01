@@ -16,7 +16,6 @@ import TerminalHeader from "../components/TerminalHeader.astro";
     </header>
     
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-      <!-- Terminal Info Section -->
       <div class="lg:col-span-8">
         <GlassPanel class="rounded-lg overflow-hidden flex flex-col h-full relative">
           <div class="scanline"></div>
@@ -30,26 +29,26 @@ import TerminalHeader from "../components/TerminalHeader.astro";
             <div class="space-y-6">
               <div class="grid grid-cols-[120px_1fr] gap-4">
                 <span class="text-primary-fixed">EMAIL:</span>
-                <span class="text-primary-fixed-dim">sithila@konara.sre</span>
+                <span class="text-primary-fixed-dim">kmsithila@gmail.com</span>
               </div>
               <div class="grid grid-cols-[120px_1fr] gap-4">
                 <span class="text-primary-fixed">PHONE:</span>
-                <span class="text-primary-fixed-dim">+1 234 567 8910</span>
+                <span class="text-primary-fixed-dim">+358 417 241 555</span>
               </div>
               <div class="grid grid-cols-[120px_1fr] gap-4 items-start">
                 <span class="text-primary-fixed">SOCIALS:</span>
                 <div class="space-y-3">
                   <div class="flex items-center gap-4 group">
                     <span class="text-on-surface-variant w-24">GITHUB:</span>
-                    <a class="text-primary-fixed-dim hover:text-primary hover:underline transition-colors" href="#">/SITHILA-K</a>
+                    <a class="text-primary-fixed-dim hover:text-primary hover:underline transition-colors" href="https://github.com/sithilaKonara/">/GIT/SITHILA</a>
                   </div>
                   <div class="flex items-center gap-4 group">
                     <span class="text-on-surface-variant w-24">LINKEDIN:</span>
-                    <a class="text-primary-fixed-dim hover:text-primary hover:underline transition-colors" href="#">/IN/SITHILAK</a>
+                    <a class="text-primary-fixed-dim hover:text-primary hover:underline transition-colors" href="https://www.linkedin.com/in/sithila-konara/">/IN/SITHILA</a>
                   </div>
                   <div class="flex items-center gap-4 group">
                     <span class="text-on-surface-variant w-24">MEDIUM:</span>
-                    <a class="text-primary-fixed-dim hover:text-primary hover:underline transition-colors" href="#">@SITHILA_SRE</a>
+                    <a class="text-primary-fixed-dim hover:text-primary hover:underline transition-colors" href="https://medium.com/@sithila_92123">/ME/SITHILA</a>
                   </div>
                 </div>
               </div>
@@ -71,27 +70,29 @@ import TerminalHeader from "../components/TerminalHeader.astro";
         </GlassPanel>
       </div>
       
-      <!-- Sidebar Section -->
       <aside class="lg:col-span-4 flex flex-col gap-8">
-        <!-- System Status Sidebar -->
         <GlassPanel class="rounded-lg p-6">
           <h3 class="font-label-caps text-label-caps text-primary-fixed mb-6 border-b border-outline-variant pb-2">SYSTEM_STATUS</h3>
           <div class="space-y-4 font-code-xs text-code-xs">
             <div class="flex justify-between items-center">
               <span class="text-on-surface-variant">NODE_LATENCY:</span>
-              <span class="text-secondary-fixed" id="latency-val">14ms</span>
+              <span class="text-secondary-fixed" id="latency-val">—</span>
             </div>
             <div class="flex justify-between items-center">
-              <span class="text-on-surface-variant">PUBLIC_IP:</span>
-              <span class="text-primary-fixed-dim" id="sim-ip">192.168.0.1</span>
+              <span class="text-on-surface-variant">TIME_ZONE:</span>
+              <span class="text-primary-fixed-dim" id="timezone">—</span>
             </div>
             <div class="flex justify-between items-center">
-              <span class="text-on-surface-variant">TLS_HANDSHAKE:</span>
-              <span class="text-secondary-fixed">SUCCESS</span>
+              <span class="text-on-surface-variant">REGION:</span>
+              <span class="text-secondary-fixed" id="region">—</span>
             </div>
             <div class="flex justify-between items-center">
               <span class="text-on-surface-variant">UPTIME:</span>
-              <span class="text-on-surface" id="uptime">364:12:05:44</span>
+              <span class="text-on-surface" id="uptime">—</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-on-surface-variant">ENVIRONMENT:</span>
+              <span class="text-on-surface" id="env">—</span>
             </div>
             <div class="mt-6 pt-4 border-t border-outline-variant">
               <div class="w-full h-1 bg-surface-container-high relative overflow-hidden">
@@ -102,30 +103,29 @@ import TerminalHeader from "../components/TerminalHeader.astro";
           </div>
         </GlassPanel>
         
-        <!-- Social Nodes -->
         <GlassPanel class="rounded-lg p-6 flex-grow">
           <h3 class="font-label-caps text-label-caps text-primary-fixed mb-6 border-b border-outline-variant pb-2">SOCIAL_NODES</h3>
           <div class="flex flex-col gap-4">
-            <a class="group flex items-center justify-between p-4 bg-surface-container-lowest/50 hover:bg-primary-fixed/10 transition-all border border-transparent hover:border-primary-fixed/40" href="#">
+            <a class="group flex items-center justify-between p-4 bg-surface-container-lowest/50 hover:bg-primary-fixed/10 transition-all border border-transparent hover:border-primary-fixed/40" href="https://github.com/sithilaKonara/">
               <div class="flex items-center gap-3">
                 <span class="material-symbols-outlined text-primary-fixed">code</span>
                 <span class="font-code-sm text-code-sm group-hover:text-primary-fixed">GITHUB</span>
               </div>
-              <span class="font-code-xs text-code-xs text-outline opacity-0 group-hover:opacity-100 transition-opacity">/SITHILA-K</span>
+              <span class="font-code-xs text-code-xs text-outline opacity-0 group-hover:opacity-100 transition-opacity">/GIT/SITHILA</span>
             </a>
-            <a class="group flex items-center justify-between p-4 bg-surface-container-lowest/50 hover:bg-primary-fixed/10 transition-all border border-transparent hover:border-primary-fixed/40" href="#">
+            <a class="group flex items-center justify-between p-4 bg-surface-container-lowest/50 hover:bg-primary-fixed/10 transition-all border border-transparent hover:border-primary-fixed/40" href="https://www.linkedin.com/in/sithila-konara/">
               <div class="flex items-center gap-3">
                 <span class="material-symbols-outlined text-primary-fixed">hub</span>
                 <span class="font-code-sm text-code-sm group-hover:text-primary-fixed">LINKEDIN</span>
               </div>
-              <span class="font-code-xs text-code-xs text-outline opacity-0 group-hover:opacity-100 transition-opacity">/IN/SITHILAK</span>
+              <span class="font-code-xs text-code-xs text-outline opacity-0 group-hover:opacity-100 transition-opacity">/IN/SITHILA</span>
             </a>
-            <a class="group flex items-center justify-between p-4 bg-surface-container-lowest/50 hover:bg-primary-fixed/10 transition-all border border-transparent hover:border-primary-fixed/40" href="#">
+            <a class="group flex items-center justify-between p-4 bg-surface-container-lowest/50 hover:bg-primary-fixed/10 transition-all border border-transparent hover:border-primary-fixed/40" href="https://medium.com/@sithila_92123">
               <div class="flex items-center gap-3">
                 <span class="material-symbols-outlined text-primary-fixed">history_edu</span>
                 <span class="font-code-sm text-code-sm group-hover:text-primary-fixed">MEDIUM</span>
               </div>
-              <span class="font-code-xs text-code-xs text-outline opacity-0 group-hover:opacity-100 transition-opacity">@SITHILA_SRE</span>
+              <span class="font-code-xs text-code-xs text-outline opacity-0 group-hover:opacity-100 transition-opacity">/ME/SITHILA</span>
             </a>
           </div>
         </GlassPanel>
@@ -135,6 +135,129 @@ import TerminalHeader from "../components/TerminalHeader.astro";
   
   <Footer />
 </Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // ----- 1. Latency (Targeted In-Place DOM Refresh) -----
+    const latencyEl = document.getElementById('latency-val');
+    let latencyInterval;
+
+    function measureLatency() {
+      const startTime = performance.now();
+      
+      fetch(window.location.href, { method: 'HEAD', cache: 'no-store' })
+        .then((response) => {
+          if (response) {
+            const latency = Math.round(performance.now() - startTime);
+            latencyEl.textContent = latency + 'ms';
+          }
+        })
+        .catch(() => {
+          latencyEl.textContent = 'N/A';
+        });
+    }
+
+    measureLatency();
+    
+    if (latencyInterval) clearInterval(latencyInterval);
+    latencyInterval = setInterval(measureLatency, 5000);
+
+    // ----- 2 & 3. Time Zone & Region Parsing -----
+    const tzEl = document.getElementById('timezone');
+    const regionEl = document.getElementById('region');
+
+    const regionMap = {
+      'Europe/Helsinki': 'Finland',
+      'Europe/Stockholm': 'Sweden',
+      'Europe/Oslo': 'Norway',
+      'Europe/Copenhagen': 'Denmark',
+      'Europe/London': 'United Kingdom',
+      'Europe/Berlin': 'Germany',
+      'Europe/Paris': 'France',
+      'Europe/Rome': 'Italy',
+      'Europe/Madrid': 'Spain',
+      'Europe/Amsterdam': 'Netherlands',
+      'Europe/Zurich': 'Switzerland',
+      'Europe/Vienna': 'Austria',
+      'Europe/Kiev': 'Ukraine',
+      'Europe/Kyiv': 'Ukraine',
+      'Europe/Moscow': 'Russia',
+      'Europe/Warsaw': 'Poland',
+      'Europe/Prague': 'Czechia',
+      'Europe/Brussels': 'Belgium',
+      'America/New_York': 'US (East)',
+      'America/Chicago': 'US (Central)',
+      'America/Los_Angeles': 'US (West)',
+      'America/Toronto': 'Canada (East)',
+      'America/Vancouver': 'Canada (West)',
+      'America/Sao_Paulo': 'Brazil',
+      'Asia/Tokyo': 'Japan',
+      'Asia/Singapore': 'Singapore',
+      'Asia/Shanghai': 'China',
+      'Asia/Hong_Kong': 'Hong Kong',
+      'Asia/Seoul': 'South Korea',
+      'Asia/Mumbai': 'India',
+      'Asia/Dubai': 'UAE',
+      'Australia/Sydney': 'Australia (East)',
+      'Australia/Melbourne': 'Australia (East)',
+      'Australia/Perth': 'Australia (West)',
+      'Pacific/Auckland': 'New Zealand',
+    };
+
+    function updateLocationUI(timezoneString) {
+      tzEl.textContent = timezoneString;
+      let displayRegion = regionMap[timezoneString];
+      if (!displayRegion) {
+        const parts = timezoneString.split('/');
+        displayRegion = parts.length > 1 ? parts[1].replace(/_/g, ' ') : timezoneString;
+      }
+      regionEl.textContent = displayRegion;
+    }
+
+    let currentTz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+    updateLocationUI(currentTz);
+
+    fetch('https://ipapi.co/json/')
+      .then(res => res.json())
+      .then(data => {
+        if (data.timezone) {
+          updateLocationUI(data.timezone);
+        }
+      })
+      .catch(err => console.log("Using native browser approximation."));
+
+    // ----- 4. Uptime -----
+    const uptimeEl = document.getElementById('uptime');
+    const start = Date.now();
+    function updateUptime() {
+      const elapsed = Math.floor((Date.now() - start) / 1000);
+      const days = String(Math.floor(elapsed / 86400)).padStart(3, '0');
+      const hours = String(Math.floor((elapsed % 86400) / 3600)).padStart(2, '0');
+      const mins = String(Math.floor((elapsed % 3600) / 60)).padStart(2, '0');
+      const secs = String(elapsed % 60).padStart(2, '0');
+      uptimeEl.textContent = `${days}:${hours}:${mins}:${secs}`;
+    }
+    updateUptime();
+    setInterval(updateUptime, 1000);
+
+    // ----- 5. Environment -----
+    const envEl = document.getElementById('env');
+    const ua = navigator.userAgent;
+    let env = 'Unknown';
+    if (ua.includes('Windows')) env = 'Windows';
+    else if (ua.includes('Mac OS')) env = 'macOS';
+    else if (ua.includes('Linux')) env = 'Linux';
+    else if (ua.includes('Android')) env = 'Android';
+    else if (ua.includes('iOS')) env = 'iOS';
+    
+    let browser = '';
+    if (ua.includes('Firefox')) browser = 'Firefox';
+    else if (ua.includes('Chrome') && !ua.includes('Edg')) browser = 'Chrome';
+    else if (ua.includes('Safari') && !ua.includes('Chrome')) browser = 'Safari';
+    else if (ua.includes('Edg')) browser = 'Edge';
+    envEl.textContent = browser ? `${browser} · ${env}` : env;
+  });
+</script>
 
 <style>
   @keyframes progress {
