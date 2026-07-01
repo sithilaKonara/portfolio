@@ -33,7 +33,7 @@ jobs:
             "https://medium.com/feed/${USERNAME}"
           )
           USER_AGENT="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-          ACCEPT_HEADER="Accept: application/rss+xml, application/xml, text/xml, */*"
+          ACCEPT_HEADER="Accept: application/rss+xml, application/xml, text/xml, *.*"
 
           FEED_DATA=""
           for URL in "${URLS[@]}"; do
@@ -95,12 +95,11 @@ jobs:
             # --- Thumbnail extraction: skip tracking pixels, get first real image ---
             THUMB=""
             if [ -n "$CONTENT_HTML" ]; then
-              # Extract all img src URLs, filter out tracking pixels, take first
-              # Add || true to prevent pipeline failure when grep -v finds no match
+              # Extract all img src targets sequentially, filter tracking pixels, grab the first one
               THUMB=$(echo "$CONTENT_HTML" | \
-                sed -n 's/.*<img[^>]*src="\([^"]*\)".*/\1/p' | \
+                grep -oP '<img[^>]+src="\K[^"]+' | \
                 grep -v '/_/stat?' | \
-                head -1 || true)
+                head -n 1 || true)
             fi
 
             # If still empty, fall back to media:thumbnail (but skip tracking)
