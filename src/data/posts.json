@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Mastering Troubleshooting in IT Support: 10 Tips to Refine Your Skills",
+    "link": "https://medium.com/@sithila_92123/mastering-troubleshooting-in-it-support-10-tips-to-refine-your-skills-c3aad7ac7ef7?source=rss-21765be859d2------2",
+    "pubDate": "03.19.2024",
+    "category": "IT-SERVICES",
+    "excerpt": "Troubleshooting is an essential skill every IT professional needs to master irrelevant to the tech domain. IT troubleshooting is not only about fixing problems. It is a strategic process of…",
+    "thumbnail": "",
+    "guid": "https://medium.com/p/c3aad7ac7ef7"
+  },
+  {
+    "title": "Optimizing AWS Lambda Performance: Navigating the Cold Start vs. Warm Start Conundrum",
+    "link": "https://medium.com/@sithila_92123/optimizing-aws-lambda-performance-navigating-the-cold-start-vs-warm-start-conundrum-375d43502d90?source=rss-21765be859d2------2",
+    "pubDate": "12.31.2023",
+    "category": "SERVERLESS",
+    "excerpt": "🤖 IntroductionThe AWS Lambda is a serverless computing service which enables code execution without the burden of managing servers. Performance is one of the key considerations in designing…",
+    "thumbnail": "",
+    "guid": "https://medium.com/p/375d43502d90"
+  },
+  {
+    "title": "Terraform module deployment using meta-arguments and expressions (loops)",
+    "link": "https://medium.com/@sithila_92123/terraform-module-deployment-using-meta-arguments-and-expressions-loops-71c138de1c40?source=rss-21765be859d2------2",
+    "pubDate": "07.19.2023",
+    "category": "DEVOPS",
+    "excerpt": "As the cloud infrastructure expands, the deployment and management of resources has become more complicated for businesses, and have become trouble keeping the scalability and flexibility of the…",
+    "thumbnail": "",
+    "guid": "https://medium.com/p/71c138de1c40"
+  },
+  {
+    "title": "AWS RDS and deployment techniques",
+    "link": "https://medium.com/@sithila_92123/aws-rds-and-deployment-techniques-612939867955?source=rss-21765be859d2------2",
+    "pubDate": "05.20.2023",
+    "category": "RDS",
+    "excerpt": "AWS RDS deployment techniques with TerraformAmazon Web Services (AWS) provides a wide range of cloud-based services that can help businesses of all sizes to build and deploy their applications in a…",
+    "thumbnail": "",
+    "guid": "https://medium.com/p/612939867955"
+  }
+]
