@@ -65,6 +65,8 @@ jobs:
           # Save feed to temporary file
           echo "$FEED_DATA" > /tmp/feed.xml
 
+          cat /tmp/feed.xml
+
           # Count items
           ITEM_COUNT=$(xmlstarlet sel -T -t -v "count(//item)" /tmp/feed.xml 2>/dev/null || echo "0")
           echo "Found $ITEM_COUNT items in feed."
