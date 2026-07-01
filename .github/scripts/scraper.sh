@@ -1,25 +1,23 @@
 #!/usr/bin/env bash
 set -euo pipefail
-
-# Enable command tracing to see exactly where it fails
+# Enable command tracing for debugging (remove after fixing)
 set -x
 
-# Usage: ./scraper.sh [username]
-# If username is not provided, reads MEDIUM_USERNAME from environment.
+trap 'echo "❌ Error on line $LINENO" >&2' ERR
 
 USERNAME="${1:-${MEDIUM_USERNAME:-}}"
 if [ -z "$USERNAME" ]; then
-  echo "❌ Error: No Medium username provided. Set MEDIUM_USERNAME env or pass as argument."
+  echo "❌ Error: No Medium username provided." >&2
   exit 1
 fi
 
-# Feed URLs (with and without @)
+echo "📡 Fetching feed for username: $USERNAME" >&2
+
 URLS=(
   "https://medium.com/feed/@${USERNAME}"
   "https://medium.com/feed/${USERNAME}"
 )
 
-# Curl settings
 USER_AGENT="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 ACCEPT_HEADER="Accept: application/rss+xml, application/xml, text/xml, */*"
 
@@ -46,11 +44,10 @@ for URL in "${URLS[@]}"; do
 done
 
 if [ -z "$FEED_DATA" ]; then
-  echo "❌ Could not fetch Medium feed from any URL." >&2
+  echo "❌ Could not fetch Medium feed." >&2
   exit 1
 fi
 
-# Save feed to temp file
 echo "$FEED_DATA" > /tmp/feed.xml
 
 # Count items
@@ -58,49 +55,51 @@ ITEM_COUNT=$(xmlstarlet sel -T -t -v "count(//item)" /tmp/feed.xml 2>/dev/null |
 echo "Found $ITEM_COUNT items in feed." >&2
 
 if [ "$ITEM_COUNT" -eq 0 ]; then
-  echo "❌ No items found in feed. Check the feed URL or your username." >&2
+  echo "❌ No items found." >&2
   exit 1
 fi
 
-# Create output directory
 mkdir -p src/data
-
-# Temporary file for JSON lines
 > /tmp/posts.json.tmp
 
-# Process each item
 for ((i=1; i<=ITEM_COUNT; i++)); do
-  # Extract fields
+  echo "  Processing item $i ..." >&2
+
   TITLE=$(xmlstarlet sel -T -t -v "//item[$i]/title" /tmp/feed.xml 2>/dev/null || echo "")
   LINK=$(xmlstarlet sel -T -t -v "//item[$i]/link" /tmp/feed.xml 2>/dev/null || echo "")
   PUB_DATE_RAW=$(xmlstarlet sel -T -t -v "//item[$i]/pubDate" /tmp/feed.xml 2>/dev/null || echo "")
   GUID=$(xmlstarlet sel -T -t -v "//item[$i]/guid" /tmp/feed.xml 2>/dev/null || echo "")
   CATEGORY=$(xmlstarlet sel -T -t -v "//item[$i]/category[1]" /tmp/feed.xml 2>/dev/null || echo "")
 
-  # Content:encoded with namespace
-  CONTENT_HTML=$(xmlstarlet sel -N content="http://purl.org/rss/1.0/modules/content/" -T -t -v "//item[$i]/content:encoded" /tmp/feed.xml 2>/dev/null || echo "")
+  echo "    Title: $TITLE" >&2
 
-  # --- Thumbnail extraction: skip tracking pixels ---
+  # content:encoded – using explicit namespace
+  CONTENT_HTML=$(xmlstarlet sel -N content="http://purl.org/rss/1.0/modules/content/" -T -t -v "//item[$i]/content:encoded" /tmp/feed.xml 2>/dev/null || echo "")
+  if [ -z "$CONTENT_HTML" ]; then
+    echo "    ⚠️ No content:encoded, trying local-name fallback" >&2
+    CONTENT_HTML=$(xmlstarlet sel -T -t -v "//*[local-name()='encoded']" /tmp/feed.xml 2>/dev/null || echo "")
+  fi
+
+  # Thumbnail extraction: skip tracking pixels, ignore `grep` failure
   THUMB=""
   if [ -n "$CONTENT_HTML" ]; then
     THUMB=$(echo "$CONTENT_HTML" | \
       sed -n 's/.*<img[^>]*src="\([^"]*\)".*/\1/p' | \
       grep -v '/_/stat?' | \
-      head -1)
+      head -1 || true)
   fi
-
-  # Fallback to media:thumbnail if still empty and not tracking
   if [ -z "$THUMB" ]; then
     MEDIA_THUMB=$(xmlstarlet sel -N media="http://search.yahoo.com/mrss/" -T -t -v "//item[$i]/media:thumbnail/@url" /tmp/feed.xml 2>/dev/null || echo "")
     if ! echo "$MEDIA_THUMB" | grep -q '/_/stat?'; then
       THUMB="$MEDIA_THUMB"
     fi
   fi
+  echo "    Thumbnail: ${THUMB:-<none>}" >&2
 
-  # Plain text excerpt (strip HTML, collapse spaces)
+  # Plain text
   PLAIN_FULL=$(echo "$CONTENT_HTML" | sed -e 's/<[^>]*>//g' -e 's/&nbsp;/ /g' | tr -s ' ' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
 
-  # Format date (MM.DD.YYYY)
+  # Date
   FORMATTED_DATE=""
   if [ -n "$PUB_DATE_RAW" ]; then
     if date -d "$PUB_DATE_RAW" >/dev/null 2>&1; then
@@ -109,15 +108,17 @@ for ((i=1; i<=ITEM_COUNT; i++)); do
       FORMATTED_DATE=$(echo "$PUB_DATE_RAW" | cut -c1-10)
     fi
   fi
+  echo "    Date: $FORMATTED_DATE" >&2
 
-  # Category: uppercase, default DEVOPS
+  # Category
   if [ -n "$CATEGORY" ]; then
     PRIMARY_CAT=$(echo "$CATEGORY" | tr '[:lower:]' '[:upper:]')
   else
     PRIMARY_CAT="DEVOPS"
   fi
+  echo "    Category: $PRIMARY_CAT" >&2
 
-  # Build JSON object with jq
+  # Build JSON
   jq -n \
     --arg title "$TITLE" \
     --arg link "$LINK" \
@@ -131,13 +132,14 @@ for ((i=1; i<=ITEM_COUNT; i++)); do
       link: $link,
       pubDate: $pubDate,
       category: $category,
-      excerpt: (if ($plain | length) > 200 then ($plain[0:200] | rtrimstr(" ") | sub(" [^ ]*$"; "")) + "…" else $plain end),
+      excerpt: (if ($plain | length) > 200 then ($plain[0:200] | sub(" [^ ]*$"; "")) + "…" else $plain end),
       thumbnail: $thumbnail,
       guid: $guid
     }' >> /tmp/posts.json.tmp
+
+  echo "    JSON appended for item $i" >&2
 done
 
-# Combine into final JSON array
+# Combine and write final JSON
 jq -s '.' /tmp/posts.json.tmp > src/data/posts.json
-
 echo "✓ Wrote $(jq length src/data/posts.json) posts to src/data/posts.json" >&2
