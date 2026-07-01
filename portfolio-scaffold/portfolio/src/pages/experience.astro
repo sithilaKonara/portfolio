@@ -306,7 +306,7 @@ import StatusBadge from "../components/StatusBadge.astro";
           <div class="space-y-3">
             <h4 class="font-label-caps text-label-caps text-primary-container/70 border-b border-primary-container/20 pb-1">05_SECURITY</h4>
             <div class="flex flex-wrap gap-2">
-              {["IAM", "ZERO-TRUST", "RBAC", "MTLS"].map(tag => (
+              {["IAM", "VAULT"].map(tag => (
                 <span class="px-3 py-1.5 bg-surface border border-primary-container/40 text-primary-container font-code-sm text-code-sm shadow-[0_0_10px_rgba(0,242,255,0.1)]">{tag}</span>
               ))}
             </div>
@@ -315,7 +315,7 @@ import StatusBadge from "../components/StatusBadge.astro";
           <div class="space-y-3">
             <h4 class="font-label-caps text-label-caps text-secondary-container/70 border-b border-secondary-container/20 pb-1">06_NETWORKING</h4>
             <div class="flex flex-wrap gap-2">
-              {["VPC", "DNS", "LOAD BALANCING", "FIREWALLS"].map(tag => (
+              {["VPC", "DNS", "LOAD BALANCING", "FIREWALLS", "SECURITY GROUPS", "ACL"].map(tag => (
                 <span class="px-3 py-1.5 bg-surface border border-secondary-container/40 text-secondary-container font-code-sm text-code-sm shadow-[0_0_10px_rgba(47,248,1,0.1)]">{tag}</span>
               ))}
             </div>

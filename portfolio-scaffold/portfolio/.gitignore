@@ -1,1 +1,31 @@
-node_modules
+# Core dependencies and build output
+node_modules/
+dist/
+.astro/
+
+# OS and editor files
+.DS_Store
+.idea
+.vscode/
+*.code-workspace
+
+# Environment variables and sensitive data
+*.env
+*.env.*
+
+# Logs and cache files
+*.log
+*.tsbuildinfo
+.turbo/
+.eslintcache
+.temp/
+
+# Deployment and platform-specific files
+.vercel
+.netlify
+_site/
+
+# Package manager lock files (uncomment/comment based on your team's preference)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
