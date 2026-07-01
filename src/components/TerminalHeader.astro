@@ -1,0 +1,18 @@
+---
+export interface Props {
+  label?: string;
+}
+
+const { label = "" } = Astro.props;
+---
+
+<div class="terminal-header px-4 py-2 flex items-center justify-between">
+  <div class="flex gap-1.5">
+    <span class="dot dot-red"></span>
+    <span class="dot dot-yellow"></span>
+    <span class="dot dot-green"></span>
+  </div>
+  {label && (
+    <span class="font-code-xs text-code-xs text-on-surface-variant">{label}</span>
+  )}
+</div>

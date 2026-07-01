@@ -1,0 +1,64 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "SRE_CORE_v1.0 | DevOps Portfolio" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  
+  <style>
+    /* Material Symbols fallback */
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      vertical-align: middle;
+    }
+  </style>
+  
+  <link rel="stylesheet" href="/src/styles/global.css" />
+</head>
+<body class="font-body-md selection:bg-primary-container selection:text-on-primary-fixed">
+  <!-- Scanline overlay -->
+  <div class="scanline"></div>
+  
+  <!-- Grid background overlay -->
+  <div class="fixed inset-0 grid-bg pointer-events-none -z-5 opacity-10"></div>
+  
+  <!-- Main content -->
+  <main>
+    <slot />
+  </main>
+
+  <!-- ============================================================ -->
+  <!-- Auto‑increment experience counters                            -->
+  <!-- ============================================================ -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const startTotalYear = 2014;   // Career start (99X)
+      const startSREYear = 2018;     // SRE/Cloud start (Pearson Senior System Engineer)
+      const currentYear = new Date().getFullYear();
+
+      const totalExp = currentYear - startTotalYear;
+      const sreExp = currentYear - startSREYear;
+
+      const totalSpans = document.querySelectorAll('#totalExperience');
+      const sreSpans = document.querySelectorAll('#sreExperience');
+
+      totalSpans.forEach(el => el.textContent = totalExp);
+      sreSpans.forEach(el => el.textContent = sreExp);
+    });
+  </script>
+</body>
+</html>
