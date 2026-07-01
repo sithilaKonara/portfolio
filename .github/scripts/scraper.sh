@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Enable command tracing to see exactly where it fails
+set -x
+
 # Usage: ./scraper.sh [username]
 # If username is not provided, reads MEDIUM_USERNAME from environment.
 
