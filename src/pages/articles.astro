@@ -4,6 +4,16 @@ import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
 import GlassPanel from "../components/GlassPanel.astro";
 import TerminalHeader from "../components/TerminalHeader.astro";
+
+// Import the posts from our generated JSON
+import posts from "../data/posts.json";
+
+// Compute approximate read time from excerpt length (roughly 200 words/minute)
+const getReadTime = (excerpt: string) => {
+  const words = excerpt.split(/\s+/).length;
+  const minutes = Math.max(1, Math.round(words / 200));
+  return `${minutes} MIN READ`;
+};
 ---
 
 <Layout title="Sithila Konara | Articles & Projects">
@@ -25,65 +35,41 @@ import TerminalHeader from "../components/TerminalHeader.astro";
         </div>
         <div class="h-px flex-grow mx-8 bg-gradient-to-r from-outline-variant/50 to-transparent"></div>
       </div>
+      
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <!-- Article 1 -->
-        <GlassPanel class="p-8 group transition-all">
-          <div class="flex justify-between items-start mb-4">
-            <span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-widest px-2 py-1 bg-secondary-container/10 border border-secondary-container/20">Kubernetes</span>
-            <span class="font-code-xs text-code-xs text-on-surface-variant">08 MIN READ</span>
-          </div>
-          <h3 class="font-headline-md text-headline-md mb-3 group-hover:text-primary-container transition-colors">Optimizing Multi-Cluster Service Mesh for Low Latency</h3>
-          <p class="font-body-md text-body-md text-on-surface-variant mb-6 line-clamp-2">Exploring the intricacies of cross-cluster communication using Istio and how we reduced inter-service overhead by 15% across three global regions.</p>
-          <a class="inline-flex items-center gap-2 font-label-caps text-label-caps text-primary-container group/link" href="#">
-            READ ON MEDIUM
-            <span class="material-symbols-outlined transition-transform group-hover/link:translate-x-1">arrow_forward</span>
-          </a>
-        </GlassPanel>
-        
-        <!-- Article 2 -->
-        <GlassPanel class="p-8 group transition-all">
-          <div class="flex justify-between items-start mb-4">
-            <span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-widest px-2 py-1 bg-secondary-container/10 border border-secondary-container/20">Observability</span>
-            <span class="font-code-xs text-code-xs text-on-surface-variant">12 MIN READ</span>
-          </div>
-          <h3 class="font-headline-md text-headline-md mb-3 group-hover:text-primary-container transition-colors">The Cost of High-Cardinality Metrics in Prometheus</h3>
-          <p class="font-body-md text-body-md text-on-surface-variant mb-6 line-clamp-2">A technical analysis of memory exhaustion events caused by dynamic label injection and how to implement strategic metric aggregation.</p>
-          <a class="inline-flex items-center gap-2 font-label-caps text-label-caps text-primary-container group/link" href="#">
-            READ ON MEDIUM
-            <span class="material-symbols-outlined transition-transform group-hover/link:translate-x-1">arrow_forward</span>
-          </a>
-        </GlassPanel>
-        
-        <!-- Article 3 -->
-        <GlassPanel class="p-8 group transition-all">
-          <div class="flex justify-between items-start mb-4">
-            <span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-widest px-2 py-1 bg-secondary-container/10 border border-secondary-container/20">Security</span>
-            <span class="font-code-xs text-code-xs text-on-surface-variant">05 MIN READ</span>
-          </div>
-          <h3 class="font-headline-md text-headline-md mb-3 group-hover:text-primary-container transition-colors">Hardening Jenkins: A Zero-Trust Approach</h3>
-          <p class="font-body-md text-body-md text-on-surface-variant mb-6 line-clamp-2">Moving beyond standard authentication to a robust IAM-based execution model for CI/CD pipelines to prevent credential leakage.</p>
-          <a class="inline-flex items-center gap-2 font-label-caps text-label-caps text-primary-container group/link" href="#">
-            READ ON MEDIUM
-            <span class="material-symbols-outlined transition-transform group-hover/link:translate-x-1">arrow_forward</span>
-          </a>
-        </GlassPanel>
-        
-        <!-- Article 4 -->
-        <GlassPanel class="p-8 group transition-all">
-          <div class="flex justify-between items-start mb-4">
-            <span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-widest px-2 py-1 bg-secondary-container/10 border border-secondary-container/20">DevOps</span>
-            <span class="font-code-xs text-code-xs text-on-surface-variant">07 MIN READ</span>
-          </div>
-          <h3 class="font-headline-md text-headline-md mb-3 group-hover:text-primary-container transition-colors">Infrastructure as Code: Refactoring 10k lines of Terraform</h3>
-          <p class="font-body-md text-body-md text-on-surface-variant mb-6 line-clamp-2">Lessons learned during a massive migration from monolithic state files to modular, testable infrastructure components.</p>
-          <a class="inline-flex items-center gap-2 font-label-caps text-label-caps text-primary-container group/link" href="#">
-            READ ON MEDIUM
-            <span class="material-symbols-outlined transition-transform group-hover/link:translate-x-1">arrow_forward</span>
-          </a>
-        </GlassPanel>
+        {
+          posts.map((post) => (
+            <GlassPanel class="p-8 group transition-all">
+              <div class="flex justify-between items-start mb-4">
+                <span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-widest px-2 py-1 bg-secondary-container/10 border border-secondary-container/20">
+                  {post.category || "DEVOPS"}
+                </span>
+                <span class="font-code-xs text-code-xs text-on-surface-variant">
+                  {getReadTime(post.excerpt)}
+                </span>
+              </div>
+              <h3 class="font-headline-md text-headline-md mb-3 group-hover:text-primary-container transition-colors">
+                {post.title}
+              </h3>
+              <p class="font-body-md text-body-md text-on-surface-variant mb-6 line-clamp-2">
+                {post.excerpt}
+              </p>
+              <a 
+                class="inline-flex items-center gap-2 font-label-caps text-label-caps text-primary-container group/link" 
+                href={post.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                READ ON MEDIUM
+                <span class="material-symbols-outlined transition-transform group-hover/link:translate-x-1">arrow_forward</span>
+              </a>
+            </GlassPanel>
+          ))
+        }
       </div>
     </section>
     
+    <!-- Open Source & Projects section (unchanged) -->
     <section class="mb-12">
       <div class="flex items-center justify-between mb-8">
         <div class="flex items-center gap-3">

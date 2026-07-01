@@ -3,14 +3,14 @@ name: Fetch Medium Posts
 
 on:
   schedule:
-    - cron: '0 6 * * *'
-  workflow_dispatch:
+    - cron: '0 6 * * *'   # daily at 06:00 UTC
+  workflow_dispatch:        # manual trigger
 
 jobs:
   fetch:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write       # needed to commit posts.json
 
     steps:
       - name: Checkout repo
@@ -73,7 +73,7 @@ jobs:
             echo "❌ No items found in feed. Check the feed URL or your username."
             exit 1
           fi
-          pwd
+
           # Create target directory
           mkdir -p src/data
 
@@ -89,15 +89,28 @@ jobs:
             GUID=$(xmlstarlet sel -T -t -v "//item[$i]/guid" /tmp/feed.xml 2>/dev/null || echo "")
             CATEGORY=$(xmlstarlet sel -T -t -v "//item[$i]/category[1]" /tmp/feed.xml 2>/dev/null || echo "")
 
-            # Thumbnail: try media:thumbnail first, then fallback to first image in content
-            THUMB=$(xmlstarlet sel -N media="http://search.yahoo.com/mrss/" -T -t -v "//item[$i]/media:thumbnail/@url" /tmp/feed.xml 2>/dev/null || echo "")
-            # Content:encoded
+            # Content:encoded (HTML)
             CONTENT_HTML=$(xmlstarlet sel -N content="http://purl.org/rss/1.0/modules/content/" -T -t -v "//item[$i]/content:encoded" /tmp/feed.xml 2>/dev/null || echo "")
 
-            # If thumbnail still empty, extract first <img> src from content
-            if [ -z "$THUMB" ] && [ -n "$CONTENT_HTML" ]; then
-              THUMB=$(echo "$CONTENT_HTML" | sed -n 's/.*<img[^>]*src="\([^"]*\)".*/\1/p' | head -1)
+            # --- Thumbnail extraction: skip tracking pixels, get first real image ---
+            THUMB=""
+            if [ -n "$CONTENT_HTML" ]; then
+              # Extract all img src URLs, filter out tracking pixels, take first
+              THUMB=$(echo "$CONTENT_HTML" | \
+                sed -n 's/.*<img[^>]*src="\([^"]*\)".*/\1/p' | \
+                grep -v '/_/stat?' | \
+                head -1)
             fi
+
+            # If still empty, fall back to media:thumbnail (but skip tracking)
+            if [ -z "$THUMB" ]; then
+              MEDIA_THUMB=$(xmlstarlet sel -N media="http://search.yahoo.com/mrss/" -T -t -v "//item[$i]/media:thumbnail/@url" /tmp/feed.xml 2>/dev/null || echo "")
+              if ! echo "$MEDIA_THUMB" | grep -q '/_/stat?'; then
+                THUMB="$MEDIA_THUMB"
+              fi
+            fi
+
+            # If still empty, leave THUMB as empty string
 
             # Strip HTML tags to get plain text (full)
             PLAIN_FULL=$(echo "$CONTENT_HTML" | sed -e 's/<[^>]*>//g' -e 's/&nbsp;/ /g' | tr -s ' ' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
