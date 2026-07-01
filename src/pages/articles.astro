@@ -14,6 +14,41 @@ const getReadTime = (excerpt: string) => {
   const minutes = Math.max(1, Math.round(words / 200));
   return `${minutes} MIN READ`;
 };
+
+// Helper: generate a data‑URI fallback image (gradient + category text)
+const getThumbnail = (post: any) => {
+  // If we have a real thumbnail (not tracking), use it
+  if (post.thumbnail && !post.thumbnail.includes('/_/stat?')) {
+    return post.thumbnail;
+  }
+  // Otherwise, return a data URI with a gradient + category name
+  const colors: Record<string, string> = {
+    'DEVOPS': '1a1a2e,16213e',
+    'SERVERLESS': '0f2027,203a43,2c5364',
+    'RDS': '1a2a6c,b21f1f,fdbb2d',
+    'IT-SERVICES': '2c3e50,3498db',
+    'KUBERNETES': '0f0c29,302b63,24243e',
+    'OBSERVABILITY': '134e5e,71b280',
+    'SECURITY': '0f0c29,302b63,24243e',
+  };
+  const cat = post.category || 'DEVOPS';
+  const gradient = colors[cat] || '1a1a2e,16213e';
+  const [start, end] = gradient.split(',');
+
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300">
+      <defs>
+        <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#${start.trim()};stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#${end.trim()};stop-opacity:1" />
+        </linearGradient>
+      </defs>
+      <rect width="600" height="300" fill="url(#g)"/>
+      <text x="300" y="150" font-family="monospace" font-size="36" fill="#00f2ff" text-anchor="middle" dominant-baseline="middle" font-weight="bold">${cat}</text>
+      <text x="300" y="190" font-family="monospace" font-size="16" fill="#ffffff" text-anchor="middle" opacity="0.6">${post.pubDate || ''}</text>
+    </svg>
+  `)}`;
+};
 ---
 
 <Layout title="Sithila Konara | Articles & Projects">
@@ -23,7 +58,9 @@ const getReadTime = (excerpt: string) => {
     <header class="mb-16">
       <h1 class="font-display text-display mb-4 tracking-tighter text-primary">KNOWLEDGE_BASE</h1>
       <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl border-l-4 border-primary-container pl-6">
-        A repository of technical deep-dives into high-availability systems, cloud-native architecture, and the pursuit of zero-downtime deployments by Sithila Konara.
+        Writing is how I think out loud. This is my public notebook — a collection of lessons learned from keeping systems alive, 
+        debugging at 3 AM, and automating the un-automatable. I believe great engineering is built on clear documentation, generous 
+        knowledge sharing, and a culture of continuous learning. These posts are my contribution to that culture.
       </p>
     </header>
     
@@ -39,30 +76,41 @@ const getReadTime = (excerpt: string) => {
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         {
           posts.map((post) => (
-            <GlassPanel class="p-8 group transition-all">
-              <div class="flex justify-between items-start mb-4">
-                <span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-widest px-2 py-1 bg-secondary-container/10 border border-secondary-container/20">
-                  {post.category || "DEVOPS"}
-                </span>
-                <span class="font-code-xs text-code-xs text-on-surface-variant">
-                  {getReadTime(post.excerpt)}
-                </span>
+            <GlassPanel class="overflow-hidden group transition-all flex flex-col h-full">
+              <!-- Thumbnail container -->
+              <div class="h-48 overflow-hidden relative flex-shrink-0">
+                <div class="absolute inset-0 bg-gradient-to-t from-background to-transparent z-10"></div>
+                <div 
+                  class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500"
+                  style={`background-image: url('${getThumbnail(post)}')`}
+                ></div>
               </div>
-              <h3 class="font-headline-md text-headline-md mb-3 group-hover:text-primary-container transition-colors">
-                {post.title}
-              </h3>
-              <p class="font-body-md text-body-md text-on-surface-variant mb-6 line-clamp-2">
-                {post.excerpt}
-              </p>
-              <a 
-                class="inline-flex items-center gap-2 font-label-caps text-label-caps text-primary-container group/link" 
-                href={post.link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                READ ON MEDIUM
-                <span class="material-symbols-outlined transition-transform group-hover/link:translate-x-1">arrow_forward</span>
-              </a>
+              <!-- Content -->
+              <div class="p-8 flex flex-col flex-grow">
+                <div class="flex justify-between items-start mb-4">
+                  <span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-widest px-2 py-1 bg-secondary-container/10 border border-secondary-container/20">
+                    {post.category || "DEVOPS"}
+                  </span>
+                  <span class="font-code-xs text-code-xs text-on-surface-variant whitespace-nowrap ml-2">
+                    {getReadTime(post.excerpt)}
+                  </span>
+                </div>
+                <h3 class="font-headline-md text-headline-md mb-3 group-hover:text-primary-container transition-colors line-clamp-2">
+                  {post.title}
+                </h3>
+                <p class="font-body-md text-body-md text-on-surface-variant mb-6 line-clamp-2 flex-grow">
+                  {post.excerpt}
+                </p>
+                <a 
+                  class="inline-flex items-center gap-2 font-label-caps text-label-caps text-primary-container group/link mt-auto" 
+                  href={post.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  READ ON MEDIUM
+                  <span class="material-symbols-outlined transition-transform group-hover/link:translate-x-1">arrow_forward</span>
+                </a>
+              </div>
             </GlassPanel>
           ))
         }
@@ -70,7 +118,7 @@ const getReadTime = (excerpt: string) => {
     </section>
     
     <!-- Open Source & Projects section (unchanged) -->
-    <section class="mb-12">
+    <!-- <section class="mb-12">
       <div class="flex items-center justify-between mb-8">
         <div class="flex items-center gap-3">
           <span class="material-symbols-outlined text-primary-container">terminal</span>
@@ -78,9 +126,9 @@ const getReadTime = (excerpt: string) => {
         </div>
         <div class="h-px flex-grow mx-8 bg-gradient-to-r from-outline-variant/50 to-transparent"></div>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6"> -->
         <!-- Project Card 1: K8s Controller -->
-        <GlassPanel class="overflow-hidden flex flex-col group h-full">
+        <!-- <GlassPanel class="overflow-hidden flex flex-col group h-full">
           <TerminalHeader label="src/controllers/main.go" />
           <div class="p-6 flex flex-col flex-grow">
             <h4 class="font-code-sm text-code-sm font-bold text-primary mb-2">Custom Kubernetes Controller in Go</h4>
@@ -106,10 +154,10 @@ const getReadTime = (excerpt: string) => {
               </div>
             </div>
           </div>
-        </GlassPanel>
+        </GlassPanel> -->
         
         <!-- Project Card 2: Terraform Disaster Recovery -->
-        <GlassPanel class="overflow-hidden flex flex-col group h-full">
+        <!-- <GlassPanel class="overflow-hidden flex flex-col group h-full">
           <TerminalHeader label="main.tf" />
           <div class="p-6 flex flex-col flex-grow">
             <h4 class="font-code-sm text-code-sm font-bold text-primary mb-2">Automated Terraform Disaster Recovery</h4>
@@ -135,10 +183,10 @@ const getReadTime = (excerpt: string) => {
               </div>
             </div>
           </div>
-        </GlassPanel>
+        </GlassPanel> -->
         
         <!-- Project Card 3: Cloud Sentinel -->
-        <GlassPanel class="overflow-hidden flex flex-col group h-full">
+        <!-- <GlassPanel class="overflow-hidden flex flex-col group h-full">
           <TerminalHeader label="internal/audit.rs" />
           <div class="p-6 flex flex-col flex-grow">
             <h4 class="font-code-sm text-code-sm font-bold text-primary mb-2">Cloud Sentinel (Rust)</h4>
@@ -166,7 +214,7 @@ const getReadTime = (excerpt: string) => {
           </div>
         </GlassPanel>
       </div>
-    </section>
+    </section> -->
   </div>
   
   <Footer />

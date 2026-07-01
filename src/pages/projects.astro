@@ -4,6 +4,9 @@ import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
 import GlassPanel from "../components/GlassPanel.astro";
 import TerminalHeader from "../components/TerminalHeader.astro";
+import { GithubActivity } from "astro-github-activity";
+
+const GITHUB_USERNAME = "sithilakonara";
 ---
 
 <Layout title="Sithila Konara // Projects">
@@ -163,42 +166,22 @@ import TerminalHeader from "../components/TerminalHeader.astro";
       </div>
     </div>
     
-    <!-- STATISTICS SECTION -->
+    <!-- STATISTICS SECTION – NOW WITH REAL CONTRIBUTION HEATMAP -->
     <section class="mb-24">
       <h2 class="font-label-caps text-label-caps text-primary-fixed-dim tracking-widest mb-8 flex items-center gap-3">
         <span class="material-symbols-outlined">analytics</span> GITHUB_ANALYTICS
       </h2>
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
         <div class="lg:col-span-2 glass-panel p-8">
           <div class="flex justify-between items-center mb-6">
             <span class="font-code-sm text-on-surface-variant">Contribution Matrix (365 Days)</span>
-            <div class="flex gap-1 items-center">
-              <span class="font-code-xs text-[10px] text-on-surface-variant opacity-50">Less</span>
-              <div class="heatmap-cell bg-surface-container-highest"></div>
-              <div class="heatmap-cell bg-primary-fixed/30"></div>
-              <div class="heatmap-cell bg-primary-fixed/60"></div>
-              <div class="heatmap-cell bg-primary-fixed"></div>
-              <span class="font-code-xs text-[10px] text-on-surface-variant opacity-50">More</span>
-            </div>
+            <!-- The component handles its own legend, but we can add our own label -->
           </div>
-          <!-- Simulated Heatmap Grid -->
-          <div class="grid grid-cols-12 md:grid-cols-[repeat(52,1fr)] gap-1">
-            {
-              Array.from({ length: 364 }).map(() => {
-                const levels = ['bg-surface-container-highest', 'bg-primary-fixed/20', 'bg-primary-fixed/40', 'bg-primary-fixed/60', 'bg-primary-fixed'];
-                const level = levels[Math.floor(Math.random() * levels.length)];
-                return `<div class="heatmap-cell ${level}"></div>`;
-              }).join('')
-            }
-          </div>
-        </div>
-        <div class="glass-panel p-8 flex flex-col justify-center">
-          <div class="text-center">
-            <div class="text-[56px] font-bold text-secondary-fixed leading-none mb-2">482k+</div>
-            <div class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-8">Lines Automated</div>
-            <div class="text-[56px] font-bold text-primary-fixed leading-none mb-2">99.9%</div>
-            <div class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">SLA Maintained</div>
-          </div>
+          <!-- 
+            Replace the mock heatmap with the real component.
+            It will render a GitHub-style contribution calendar.
+          -->
+          <GithubActivity user={GITHUB_USERNAME} theme="dark" />
         </div>
       </div>
     </section>
@@ -212,10 +195,15 @@ import TerminalHeader from "../components/TerminalHeader.astro";
           System load is currently low. Available for infrastructure audits,
           migration consulting, and open-source contributions.
         </p>
-        <button class="group px-12 py-5 bg-primary-fixed text-on-primary-fixed font-label-caps text-[16px] font-bold uppercase tracking-widest hover:shadow-[0_0_30px_#74f5ff] transition-all flex items-center gap-4 mx-auto">
-          [Open Terminal]
+        <a 
+          href="https://github.com/sithilaKonara?tab=repositories" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="group px-8 py-4 bg-primary-fixed text-on-primary-fixed font-label-caps text-[16px] font-bold uppercase tracking-widest hover:shadow-[0_0_30px_#74f5ff] transition-all flex items-center justify-center gap-3 mx-auto w-fit"
+        >
+          [Open GitHub]
           <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
-        </button>
+        </a>
       </div>
     </section>
   </div>
@@ -231,10 +219,5 @@ import TerminalHeader from "../components/TerminalHeader.astro";
   @keyframes blink {
     from, to { opacity: 1; }
     50% { opacity: 0; }
-  }
-  .heatmap-cell {
-    width: 12px;
-    height: 12px;
-    border-radius: 2px;
   }
 </style>
