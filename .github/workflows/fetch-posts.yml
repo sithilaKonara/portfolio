@@ -24,35 +24,56 @@ jobs:
         env:
           MEDIUM_USERNAME: ${{ secrets.MEDIUM_USERNAME }}
         run: |
+          set -e
+
+          USERNAME="${{ env.MEDIUM_USERNAME }}"
+          URLS=(
+            "https://medium.com/feed/@${USERNAME}"
+            "https://medium.com/feed/${USERNAME}"
+          )
+
+          # Curl settings
+          USER_AGENT="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+          ACCEPT_HEADER="Accept: application/rss+xml, application/xml, text/xml, */*"
+
+          FEED_DATA=""
+          for URL in "${URLS[@]}"; do
+            echo "→ Trying $URL"
+            for TRY in 1 2 3; do
+              if FEED_DATA=$(curl -sSL --max-time 15 \
+                  -H "User-Agent: $USER_AGENT" \
+                  -H "$ACCEPT_HEADER" \
+                  "$URL" 2>/dev/null); then
+                if echo "$FEED_DATA" | grep -q '<rss'; then
+                  echo "✓ Success (attempt $TRY)"
+                  break 2
+                else
+                  echo "⚠️ Response is not RSS (attempt $TRY)"
+                fi
+              else
+                echo "⚠️ Curl failed (attempt $TRY)"
+              fi
+              sleep $((TRY * 2))
+            done
+            echo "❌ All attempts failed for $URL"
+          done
+
+          if [ -z "$FEED_DATA" ]; then
+            echo "❌ Could not fetch Medium feed from any URL."
+            exit 1
+          fi
+
+          # Parse the feed with Python (reads from stdin)
           python3 - <<'EOF'
-          import json, re, urllib.request, xml.etree.ElementTree as ET
+          import sys, json, re, xml.etree.ElementTree as ET
           from datetime import datetime
 
-          username = "${{ env.MEDIUM_USERNAME }}"
-          # Try with @ first, fallback to without @ if needed
-          urls = [
-              f"https://medium.com/feed/@{username}",
-              f"https://medium.com/feed/{username}",
-          ]
-
-          headers = {
-              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-          }
-
-          tree = None
-          for url in urls:
-              try:
-                  req = urllib.request.Request(url, headers=headers)
-                  with urllib.request.urlopen(req, timeout=15) as r:
-                      tree = ET.parse(r)
-                      print(f"✓ Successfully fetched feed from: {url}")
-                      break
-              except Exception as e:
-                  print(f"⚠️ Failed to fetch {url}: {e}")
-                  continue
-
-          if tree is None:
-              raise RuntimeError("Could not fetch Medium feed from any URL.")
+          feed_xml = sys.stdin.read()
+          try:
+              tree = ET.fromstring(feed_xml)
+          except ET.ParseError as e:
+              print(f"❌ XML parsing error: {e}", file=sys.stderr)
+              sys.exit(1)
 
           ns = {
               'content': 'http://purl.org/rss/1.0/modules/content/',
@@ -62,22 +83,22 @@ jobs:
 
           posts = []
           for item in tree.findall('.//item'):
-              # Extract thumbnail from content:encoded or media:thumbnail
+              # Thumbnail
               thumbnail = None
               content_encoded = item.findtext('content:encoded', namespaces=ns) or ''
               img_match = re.search(r'<img[^>]+src="([^"]+)"', content_encoded)
               if img_match:
                   thumbnail = img_match.group(1)
 
-              # Extract plain-text excerpt from content
+              # Plain excerpt
               plain = re.sub(r'<[^>]+>', '', content_encoded)
               excerpt = plain.strip()[:200].rsplit(' ', 1)[0] + '…' if len(plain) > 200 else plain.strip()
 
-              # Parse categories
+              # Categories
               categories = [c.text for c in item.findall('category') if c.text]
               primary_cat = categories[0].upper() if categories else 'DEVOPS'
 
-              # Format date
+              # Date
               pub_raw = item.findtext('pubDate') or ''
               try:
                   dt = datetime.strptime(pub_raw, '%a, %d %b %Y %H:%M:%S %Z')
