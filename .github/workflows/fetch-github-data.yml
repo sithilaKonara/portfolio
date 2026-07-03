@@ -1,0 +1,49 @@
+# .github/workflows/fetch-github-data.yml
+#
+# Runs fetch-github.py daily and commits the output.
+#
+# Required repo secrets (Settings → Secrets → Actions):
+#   GH_USERNAME  — your GitHub username  (e.g. sithila)
+#   GH_PAT       — classic PAT with scopes: public_repo, read:user
+
+name: Fetch GitHub Data
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # daily 06:00 UTC = 09:00 Helsinki
+  workflow_dispatch:       # allows manual run from the Actions tab
+
+jobs:
+  fetch-and-commit:
+    name: Fetch GitHub data and commit JSON
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write   # needed to push the updated JSON files back
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run fetch-github.py
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          python3 scripts/fetch-github.py \
+            --username ${{ secrets.GITHUBUSERNAME }} \
+            --pat "${{ env.GH_PAT }}"
+
+      - name: Commit updated JSON if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add src/data/repos.json src/data/github-stats.json
+
+          if git diff --cached --quiet; then
+            echo "No changes — skipping commit"
+          else
+            git commit -m "chore(data): update GitHub data $(date -u '+%Y-%m-%d') [skip ci]"
+            git push
+            echo "Pushed updated GitHub data"
+          fi
