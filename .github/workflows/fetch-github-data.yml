@@ -29,6 +29,8 @@ jobs:
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
+          pwd
+          ls -al
           python3 scripts/fetch-github.py \
             --username ${{ secrets.GITHUBUSERNAME }} \
             --pat "${{ env.GH_PAT }}"
