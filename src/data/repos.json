@@ -1,5 +1,19 @@
 [
   {
+    "name": "portfolio",
+    "fullName": "sithilaKonara/portfolio",
+    "description": "",
+    "url": "https://github.com/sithilaKonara/portfolio",
+    "homepage": "",
+    "stars": 0,
+    "forks": 0,
+    "language": "Astro",
+    "langColor": "#849495",
+    "topics": [],
+    "updatedAt": "Today",
+    "openIssues": 0
+  },
+  {
     "name": "sithilaKonara",
     "fullName": "sithilaKonara/sithilaKonara",
     "description": "",
