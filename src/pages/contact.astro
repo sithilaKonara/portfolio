@@ -4,16 +4,24 @@ import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
 import GlassPanel from "../components/GlassPanel.astro";
 import TerminalHeader from "../components/TerminalHeader.astro";
+import StatusBadge from "../components/StatusBadge.astro";
 ---
 
 <Layout title="Sithila Konara | Contact">
   <Navigation currentPage="/contact" />
   
   <div class="pt-24 pb-12 px-6 md:px-margin_desktop max-w-container_max_width mx-auto">
-    <header class="mb-12 text-center md:text-left">
-      <h1 class="font-display text-display text-primary-fixed mb-2">CONTACT_INFO</h1>
+    <header class="text-center md:text-left space-y-4 mb-12">   <!-- ✅ reduced gap -->
+      <StatusBadge label="STATUS: OPEN TO OPPORTUNITIES" />
+      <h1 class="font-display text-display text-primary uppercase tracking-tighter">
+        CONTACT 
+      </h1>    
       <p class="font-code-sm text-code-sm text-on-surface-variant uppercase tracking-widest">DECRYPTING COMMUNICATIONS CHANNELS FOR SITHILA_KONARA</p>
     </header>
+
+
+
+    
     
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
       <div class="lg:col-span-8">

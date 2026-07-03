@@ -4,24 +4,20 @@ import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
 import GlassPanel from "../components/GlassPanel.astro";
 import TerminalHeader from "../components/TerminalHeader.astro";
+import StatusBadge from "../components/StatusBadge.astro";
 
-// Import the posts from our generated JSON
 import posts from "../data/posts.json";
 
-// Compute approximate read time from excerpt length (roughly 200 words/minute)
 const getReadTime = (excerpt: string) => {
   const words = excerpt.split(/\s+/).length;
   const minutes = Math.max(1, Math.round(words / 200));
   return `${minutes} MIN READ`;
 };
 
-// Helper: generate a data‑URI fallback image (gradient + category text)
 const getThumbnail = (post: any) => {
-  // If we have a real thumbnail (not tracking), use it
   if (post.thumbnail && !post.thumbnail.includes('/_/stat?')) {
     return post.thumbnail;
   }
-  // Otherwise, return a data URI with a gradient + category name
   const colors: Record<string, string> = {
     'DEVOPS': '1a1a2e,16213e',
     'SERVERLESS': '0f2027,203a43,2c5364',
@@ -55,15 +51,19 @@ const getThumbnail = (post: any) => {
   <Navigation currentPage="/articles" />
   
   <div class="relative z-10 pt-32 pb-24 px-4 md:px-margin_desktop max-w-[1200px] mx-auto">
-    <header class="mb-16">
-      <h1 class="font-display text-display mb-4 tracking-tighter text-primary">KNOWLEDGE_BASE</h1>
+
+    <header class="text-center md:text-left space-y-4 mb-12">   <!-- ✅ reduced gap -->
+      <StatusBadge label="STATUS: OPEN TO OPPORTUNITIES" />
+      <h1 class="font-display text-display text-primary uppercase tracking-tighter">
+        KNOWLEDGE BASE 
+      </h1>    
       <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl border-l-4 border-primary-container pl-6">
         Writing is how I think out loud. This is my public notebook — a collection of lessons learned from keeping systems alive, 
         debugging at 3 AM, and automating the un-automatable. I believe great engineering is built on clear documentation, generous 
         knowledge sharing, and a culture of continuous learning. These posts are my contribution to that culture.
       </p>
     </header>
-    
+
     <section class="mb-24">
       <div class="flex items-center justify-between mb-8">
         <div class="flex items-center gap-3">
@@ -77,7 +77,6 @@ const getThumbnail = (post: any) => {
         {
           posts.map((post) => (
             <GlassPanel class="overflow-hidden group transition-all flex flex-col h-full">
-              <!-- Thumbnail container -->
               <div class="h-48 overflow-hidden relative flex-shrink-0">
                 <div class="absolute inset-0 bg-gradient-to-t from-background to-transparent z-10"></div>
                 <div 
@@ -85,7 +84,6 @@ const getThumbnail = (post: any) => {
                   style={`background-image: url('${getThumbnail(post)}')`}
                 ></div>
               </div>
-              <!-- Content -->
               <div class="p-8 flex flex-col flex-grow">
                 <div class="flex justify-between items-start mb-4">
                   <span class="font-code-xs text-code-xs text-secondary-fixed-dim uppercase tracking-widest px-2 py-1 bg-secondary-container/10 border border-secondary-container/20">
@@ -117,104 +115,7 @@ const getThumbnail = (post: any) => {
       </div>
     </section>
     
-    <!-- Open Source & Projects section (unchanged) -->
-    <!-- <section class="mb-12">
-      <div class="flex items-center justify-between mb-8">
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-primary-container">terminal</span>
-          <h2 class="font-headline-md text-headline-md text-primary tracking-tight">Open Source &amp; Projects</h2>
-        </div>
-        <div class="h-px flex-grow mx-8 bg-gradient-to-r from-outline-variant/50 to-transparent"></div>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6"> -->
-        <!-- Project Card 1: K8s Controller -->
-        <!-- <GlassPanel class="overflow-hidden flex flex-col group h-full">
-          <TerminalHeader label="src/controllers/main.go" />
-          <div class="p-6 flex flex-col flex-grow">
-            <h4 class="font-code-sm text-code-sm font-bold text-primary mb-2">Custom Kubernetes Controller in Go</h4>
-            <p class="font-code-xs text-code-xs text-on-surface-variant mb-6 flex-grow">A high-performance controller built with operator-sdk for managing dynamic cloud resources based on traffic patterns.</p>
-            <div class="mt-auto">
-              <div class="flex items-center gap-4 mb-4 text-on-surface-variant font-code-xs">
-                <div class="flex items-center gap-1">
-                  <span class="material-symbols-outlined text-[16px]">star</span>
-                  <span>1.2k</span>
-                </div>
-                <div class="flex items-center gap-1">
-                  <span class="material-symbols-outlined text-[16px]">fork_left</span>
-                  <span>240</span>
-                </div>
-              </div>
-              <div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden flex">
-                <div class="h-full bg-[#00add8] w-[85%]"></div>
-                <div class="h-full bg-[#dedede] w-[15%]"></div>
-              </div>
-              <div class="flex justify-between mt-2 font-code-xs text-code-xs">
-                <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#00add8]"></span> Go</span>
-                <span class="text-on-surface-variant">85%</span>
-              </div>
-            </div>
-          </div>
-        </GlassPanel> -->
-        
-        <!-- Project Card 2: Terraform Disaster Recovery -->
-        <!-- <GlassPanel class="overflow-hidden flex flex-col group h-full">
-          <TerminalHeader label="main.tf" />
-          <div class="p-6 flex flex-col flex-grow">
-            <h4 class="font-code-sm text-code-sm font-bold text-primary mb-2">Automated Terraform Disaster Recovery</h4>
-            <p class="font-code-xs text-code-xs text-on-surface-variant mb-6 flex-grow">A framework for regional failover automation using Terraform state orchestration and GitHub Actions.</p>
-            <div class="mt-auto">
-              <div class="flex items-center gap-4 mb-4 text-on-surface-variant font-code-xs">
-                <div class="flex items-center gap-1">
-                  <span class="material-symbols-outlined text-[16px]">star</span>
-                  <span>840</span>
-                </div>
-                <div class="flex items-center gap-1">
-                  <span class="material-symbols-outlined text-[16px]">fork_left</span>
-                  <span>112</span>
-                </div>
-              </div>
-              <div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden flex">
-                <div class="h-full bg-[#5c4ee5] w-[92%]"></div>
-                <div class="h-full bg-[#f1e05a] w-[8%]"></div>
-              </div>
-              <div class="flex justify-between mt-2 font-code-xs text-code-xs">
-                <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#5c4ee5]"></span> HCL</span>
-                <span class="text-on-surface-variant">92%</span>
-              </div>
-            </div>
-          </div>
-        </GlassPanel> -->
-        
-        <!-- Project Card 3: Cloud Sentinel -->
-        <!-- <GlassPanel class="overflow-hidden flex flex-col group h-full">
-          <TerminalHeader label="internal/audit.rs" />
-          <div class="p-6 flex flex-col flex-grow">
-            <h4 class="font-code-sm text-code-sm font-bold text-primary mb-2">Cloud Sentinel (Rust)</h4>
-            <p class="font-code-xs text-code-xs text-on-surface-variant mb-6 flex-grow">Real-time security auditing tool for AWS IAM policies with blazingly fast scanning capabilities.</p>
-            <div class="mt-auto">
-              <div class="flex items-center gap-4 mb-4 text-on-surface-variant font-code-xs">
-                <div class="flex items-center gap-1">
-                  <span class="material-symbols-outlined text-[16px]">star</span>
-                  <span>2.1k</span>
-                </div>
-                <div class="flex items-center gap-1">
-                  <span class="material-symbols-outlined text-[16px]">fork_left</span>
-                  <span>380</span>
-                </div>
-              </div>
-              <div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden flex">
-                <div class="h-full bg-[#dea584] w-[95%]"></div>
-                <div class="h-full bg-[#3572A5] w-[5%]"></div>
-              </div>
-              <div class="flex justify-between mt-2 font-code-xs text-code-xs">
-                <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#dea584]"></span> Rust</span>
-                <span class="text-on-surface-variant">95%</span>
-              </div>
-            </div>
-          </div>
-        </GlassPanel>
-      </div>
-    </section> -->
+    <!-- (commented out sections) -->
   </div>
   
   <Footer />
