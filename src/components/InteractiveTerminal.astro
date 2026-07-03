@@ -239,7 +239,7 @@
     }
     
     function init() {
-      const input = document.getElementById('terminalInput');
+      const input = document.getElementById('terminalInput') as HTMLInputElement;
       const output = document.getElementById('output');
       const terminalBody = document.getElementById('terminalBody');
       
@@ -265,10 +265,10 @@
         
         whoami: `
   👤 Sithila Konara
-  Cloud DevOps & Platform SRE Engineer
+  Cloud, DevOps, Platform & SRE Engineer
   📍 Turku, Finland
-  ⚡ 7+ years in the industry
-  🏗️ Building resilient, self-healing distributed systems
+  ⚡ 12 years in the industry
+  🏗️ Building resilient, self-healing distributed systems with observerbility
   `,
         
         experience: `
@@ -276,22 +276,21 @@
   
   🔹 HCLTECH (2024 - Present)
      Site Reliability Engineer
-     - SRE support for global, high-traffic web applications
-     - Built self-service tools reducing team toil by 30%
-  
+    
   🔹 PEARSON (2022 - 2023)
      Associate Technical Specialist
-     - Architected scalable AWS cloud infrastructure
-     - Drove FinOps initiatives: 30% cost reduction
   
   🔹 PEARSON (2018 - 2022)
      Senior System Engineer
-     - Managed 3000+ hybrid servers with 99% availability
-     - Automated patching: 90% success rate
   
   🔹 INVOLVE 360 (2016 - 2018)
      Infrastructure Management Engineer
-     - NOC support for MSPs across US, UK, Australia, Canada
+
+  🔹 Systems Engineer (2015 - 2016)
+     Systems Engineer
+
+  🔹 System Support Technician (2013 - 2015)
+      System Support Technician
   `,
         
         skills: `
@@ -301,7 +300,7 @@
   📦  Container Orchestration: Kubernetes, Docker
   🏗️  Infrastructure as Code: Terraform, Ansible
   🔧  Automation: Python, Bash, GitHub Actions
-  🔐  Security: IAM, Zero-Trust, Least-Privilege Access
+  🔐  Security: IAM, Vault, Least-Privilege Access
   📊  Observability: Monitoring, Dashboards, SLO Tracking
   💰  FinOps: Cost Optimization, Resource Visibility
   `,
@@ -339,25 +338,27 @@
   🟢 STATUS: OPEN TO OPPORTUNITIES
   
   Currently seeking:
-    • Senior SRE Roles
-    • Cloud DevOps Positions  
-    • Platform Engineering Lead
   
+    • Cloud Positions
+    • DevOps Positions    
+    • Platform Engineering Roles
+    • SRE Roles
+
   Ready to build resilient systems at scale!
   `,
         
         blog: `
   📝 Latest Writings:
   
-  🔹 Cloud Cost Optimization Strategies (Jun 2024)
-  🔹 Building SLOs for Distributed Systems (Apr 2024)
-  🔹 Automating Infrastructure at Scale (Feb 2024)
+    Ⓜ  Medium: https://medium.com/@sithila_92123
   
   → Read all: /articles
   `
       };
       
-      function executeCommand(command) {
+      function executeCommand(command: string) {
+        if (!output) return;
+        
         // Remove the typewriter cursor line (last line)
         const lastLine = output.lastElementChild;
         if (lastLine && lastLine.querySelector('.typewriter')) {
@@ -381,11 +382,11 @@
           promptLine.className = 'line';
           promptLine.innerHTML = `<span class="prompt">❯</span> <span class="text-primary-container typewriter">Ready for input_</span>`;
           output.appendChild(promptLine);
-          terminalBody.scrollTop = terminalBody.scrollHeight;
+          if (terminalBody) terminalBody.scrollTop = terminalBody.scrollHeight;
           return;
         }
         
-        const response = commands[command] || `Command not found: "${command}". Type 'help' for available commands.`;
+        const response = commands[command as keyof typeof commands] || `Command not found: "${command}". Type 'help' for available commands.`;
         respLine.innerHTML = `<span class="text-secondary-container" style="white-space: pre-wrap;">${response}</span>`;
         output.appendChild(respLine);
         
@@ -396,7 +397,7 @@
         output.appendChild(newPrompt);
         
         // Scroll to bottom
-        terminalBody.scrollTop = terminalBody.scrollHeight;
+        if (terminalBody) terminalBody.scrollTop = terminalBody.scrollHeight;
       }
       
       // Focus input on click anywhere in terminal
@@ -417,7 +418,7 @@
           }
           input.value = '';
           // Auto-scroll
-          terminalBody.scrollTop = terminalBody.scrollHeight;
+          if (terminalBody) terminalBody.scrollTop = terminalBody.scrollHeight;
         }
         
         // Command history (up/down arrows)
