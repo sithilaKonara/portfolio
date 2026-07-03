@@ -27,11 +27,17 @@ jobs:
 
       - name: Run fetch-github.py
         env:
-          GH_PAT: ${{ secrets.GH_PAT }}
+            GH_PAT: ${{ secrets.GH_PAT }}
         run: |
-          pwd
-          ls -al
-          python3 scripts/fetch-github.py \
+            pwd
+            echo "=== Repository root contents ==="
+            ls -la
+            echo "=== Looking for scripts directory ==="
+            ls -la scripts/ 2>/dev/null || echo "scripts/ not found"
+            echo "=== Searching for fetch-github.py ==="
+            find . -name "fetch-github.py"
+            echo "=== Running script ==="
+            python3 scripts/fetch-github.py \
             --username ${{ secrets.GITHUBUSERNAME }} \
             --pat "${{ env.GH_PAT }}"
 
