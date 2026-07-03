@@ -156,13 +156,13 @@ import StatusBadge from "../components/StatusBadge.astro";
       
       fetch(window.location.href, { method: 'HEAD', cache: 'no-store' })
         .then((response) => {
-          if (response) {
+          if (response && latencyEl) {
             const latency = Math.round(performance.now() - startTime);
             latencyEl.textContent = latency + 'ms';
           }
         })
         .catch(() => {
-          latencyEl.textContent = 'N/A';
+          if (latencyEl) latencyEl.textContent = 'N/A';
         });
     }
 
@@ -175,7 +175,7 @@ import StatusBadge from "../components/StatusBadge.astro";
     const tzEl = document.getElementById('timezone');
     const regionEl = document.getElementById('region');
 
-    const regionMap = {
+    const regionMap: Record<string, string> = {
       'Europe/Helsinki': 'Finland',
       'Europe/Stockholm': 'Sweden',
       'Europe/Oslo': 'Norway',
@@ -213,7 +213,8 @@ import StatusBadge from "../components/StatusBadge.astro";
       'Pacific/Auckland': 'New Zealand',
     };
 
-    function updateLocationUI(timezoneString) {
+    function updateLocationUI(timezoneString: string) {
+      if (!tzEl || !regionEl) return;
       tzEl.textContent = timezoneString;
       let displayRegion = regionMap[timezoneString];
       if (!displayRegion) {
@@ -239,6 +240,7 @@ import StatusBadge from "../components/StatusBadge.astro";
     const uptimeEl = document.getElementById('uptime');
     const start = Date.now();
     function updateUptime() {
+      if (!uptimeEl) return;
       const elapsed = Math.floor((Date.now() - start) / 1000);
       const days = String(Math.floor(elapsed / 86400)).padStart(3, '0');
       const hours = String(Math.floor((elapsed % 86400) / 3600)).padStart(2, '0');
@@ -246,8 +248,10 @@ import StatusBadge from "../components/StatusBadge.astro";
       const secs = String(elapsed % 60).padStart(2, '0');
       uptimeEl.textContent = `${days}:${hours}:${mins}:${secs}`;
     }
-    updateUptime();
-    setInterval(updateUptime, 1000);
+    if (uptimeEl) {
+      updateUptime();
+      setInterval(updateUptime, 1000);
+    }
 
     // ----- 5. Environment -----
     const envEl = document.getElementById('env');
@@ -264,7 +268,9 @@ import StatusBadge from "../components/StatusBadge.astro";
     else if (ua.includes('Chrome') && !ua.includes('Edg')) browser = 'Chrome';
     else if (ua.includes('Safari') && !ua.includes('Chrome')) browser = 'Safari';
     else if (ua.includes('Edg')) browser = 'Edge';
-    envEl.textContent = browser ? `${browser} · ${env}` : env;
+    if (envEl) {
+      envEl.textContent = browser ? `${browser} · ${env}` : env;
+    }
   });
 </script>
 

@@ -56,8 +56,8 @@ const { title, description = "SRE_CORE_v1.0 | DevOps Portfolio" } = Astro.props;
       const totalSpans = document.querySelectorAll('#totalExperience');
       const sreSpans = document.querySelectorAll('#sreExperience');
 
-      totalSpans.forEach(el => el.textContent = totalExp);
-      sreSpans.forEach(el => el.textContent = sreExp);
+      totalSpans.forEach(el => el.textContent = totalExp.toString());
+      sreSpans.forEach(el => el.textContent = sreExp.toString());
     });
   </script>
 </body>

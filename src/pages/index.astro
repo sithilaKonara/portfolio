@@ -29,7 +29,7 @@ const getReadTime = (excerpt: string) => {
 };
 
 // Fallback image if thumbnail is missing or is a tracking pixel
-const getThumbnail = (post) => {
+const getThumbnail = (post: any) => {
   // If there's a real image (not a tracking pixel), use it
   if (post.thumbnail && !post.thumbnail.includes('/_/stat?')) {
     return post.thumbnail;

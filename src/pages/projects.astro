@@ -3,7 +3,6 @@ import Layout from "../layouts/Layout.astro";
 import Navigation from "../components/Navigation.astro";
 import Footer from "../components/Footer.astro";
 import GlassPanel from "../components/GlassPanel.astro";
-import TerminalHeader from "../components/TerminalHeader.astro";
 import { GithubActivity } from "astro-github-activity";
 import StatusBadge from "../components/StatusBadge.astro";
 import reposData from "../data/repos.json";
@@ -118,15 +117,15 @@ const GITHUB_USERNAME = "sithilakonara";
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-8">
           <div class="glass-panel p-4 text-center">
             <div class="text-secondary-fixed font-code-sm">Total Repos</div>
-            <div class="text-3xl font-display text-primary-fixed">{statsData.total_repos ?? repos.length}</div>
+            <div class="text-3xl font-display text-primary-fixed">{statsData.totalRepos ?? repos.length}</div>
           </div>
           <div class="glass-panel p-4 text-center">
             <div class="text-secondary-fixed font-code-sm">Total Stars</div>
-            <div class="text-3xl font-display text-primary-fixed">{statsData.total_stars ?? repos.reduce((acc, r) => acc + (r.stars || 0), 0)}</div>
+            <div class="text-3xl font-display text-primary-fixed">{statsData.totalStars ?? repos.reduce((acc, r) => acc + (r.stars || 0), 0)}</div>
           </div>
           <div class="glass-panel p-4 text-center">
             <div class="text-secondary-fixed font-code-sm">Total Forks</div>
-            <div class="text-3xl font-display text-primary-fixed">{statsData.total_forks ?? repos.reduce((acc, r) => acc + (r.forks || 0), 0)}</div>
+            <div class="text-3xl font-display text-primary-fixed">{statsData.totalForks ?? repos.reduce((acc, r) => acc + (r.forks || 0), 0)}</div>
           </div>
           <div class="glass-panel p-4 text-center">
             <div class="text-secondary-fixed font-code-sm">Languages</div>
