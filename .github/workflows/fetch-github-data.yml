@@ -10,7 +10,7 @@ name: Fetch GitHub Data
 
 on:
   schedule:
-    - cron: '0 6 * * *'  # daily 06:00 UTC = 09:00 Helsinki
+    - cron: '0 6 1 * *'  # daily 06:00 UTC = 09:00 Helsinki
   workflow_dispatch:       # allows manual run from the Actions tab
 
 jobs:
