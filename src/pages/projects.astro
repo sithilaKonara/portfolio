@@ -115,22 +115,41 @@ const GITHUB_USERNAME = "sithilakonara";
       
       {statsData && typeof statsData === 'object' && (
         <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-8">
-          <div class="glass-panel p-4 text-center">
-            <div class="text-secondary-fixed font-code-sm">Total Repos</div>
-            <div class="text-3xl font-display text-primary-fixed">{statsData.totalRepos ?? repos.length}</div>
-          </div>
-          <div class="glass-panel p-4 text-center">
-            <div class="text-secondary-fixed font-code-sm">Total Stars</div>
-            <div class="text-3xl font-display text-primary-fixed">{statsData.totalStars ?? repos.reduce((acc, r) => acc + (r.stars || 0), 0)}</div>
-          </div>
-          <div class="glass-panel p-4 text-center">
-            <div class="text-secondary-fixed font-code-sm">Total Forks</div>
-            <div class="text-3xl font-display text-primary-fixed">{statsData.totalForks ?? repos.reduce((acc, r) => acc + (r.forks || 0), 0)}</div>
-          </div>
-          <div class="glass-panel p-4 text-center">
-            <div class="text-secondary-fixed font-code-sm">Languages</div>
-            <div class="text-3xl font-display text-primary-fixed">{statsData.languages ? Object.keys(statsData.languages).length : "—"}</div>
-          </div>
+          <GlassPanel class="p-6 border-l-4 border-l-primary-container flex flex-col justify-between">
+            <span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Total Repos</span>
+            <div class="mt-2">
+              <span class="font-display text-headline-md text-primary-container">
+                {statsData.totalRepos ?? repos.length}
+              </span>
+            </div>
+          </GlassPanel>
+
+          <GlassPanel class="p-6 border-l-4 border-l-secondary-container flex flex-col justify-between">
+            <span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Total Stars</span>
+            <div class="mt-2">
+              <span class="font-display text-headline-md text-secondary-container">
+                {statsData.totalStars ?? repos.reduce((acc, r) => acc + (r.stars || 0), 0)}
+              </span>
+            </div>
+          </GlassPanel>
+
+          <GlassPanel class="p-6 border-l-4 border-l-tertiary-fixed-dim flex flex-col justify-between">
+            <span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Total Forks</span>
+            <div class="mt-2">
+              <span class="font-display text-headline-md text-tertiary-fixed-dim">
+                {statsData.totalForks ?? repos.reduce((acc, r) => acc + (r.forks || 0), 0)}
+              </span>
+            </div>
+          </GlassPanel>
+
+          <GlassPanel class="p-6 border-l-4 border-l-error flex flex-col justify-between">
+            <span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Languages</span>
+            <div class="mt-2">
+              <span class="font-display text-headline-md text-error">
+                {statsData.languages ? Object.keys(statsData.languages).length : "—"}
+              </span>
+            </div>
+          </GlassPanel>
         </div>
       )}
     </section>
