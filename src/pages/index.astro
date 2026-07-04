@@ -139,6 +139,7 @@ const getThumbnail = (post: any) => {
       </div>
       <div class="flex flex-wrap gap-4 justify-center md:justify-start"> 
         {["AWS/GCP", "Terraform", "Kubernetes", "Python/Bash", "FinOps", "CI/CD"].map((skill, i) => (
+          
           <div class={`px-6 py-4 glass-panel border-${i % 2 === 0 ? 'primary-container' : 'secondary-container'}/20 flex flex-col gap-2 min-w-[140px] group hover:border-${i % 2 === 0 ? 'primary-container' : 'secondary-container'} transition-all cursor-default`}>
             <span class={`font-code-xs text-code-xs text-${i % 2 === 0 ? 'primary-container' : 'secondary-container'} opacity-50`}> ENGINEER_{String(i + 1).padStart(2, '0')} </span>
             <span class="font-code-sm text-code-sm font-bold">{skill}</span>
