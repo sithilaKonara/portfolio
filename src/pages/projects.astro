@@ -76,7 +76,7 @@ const LANG_COLORS: Record<string, string> = {
                   <div>
                     <h3 class="font-headline-md text-headline-md text-primary-fixed mb-2">{name}</h3>
                     <div class="flex flex-wrap gap-2">
-                      {topics.slice(0,3).map(tag => (
+                      {topics.map(tag => (
                         <span class="px-2 py-0.5 border border-primary-fixed text-primary-fixed font-code-xs text-[10px] uppercase">{tag}</span>
                       ))}
                       {topics.length === 0 && language && (
