@@ -1,0 +1,44 @@
+{
+    "credlyUrl": "https://www.credly.com/users/sithila-konara",
+    "badges": [
+        {
+            "name": "AWS Knowledge: Amazon EKS - Training Badge",
+            "issuer": "Amazon Web Services",
+            "imageUrl": "https://images.credly.com/size/340x340/images/f5efafe6-ebdc-485c-9ffa-3a05533e634b/blob",
+            "badgeUrl": "https://www.credly.com/badges/ba3278c0-bf26-47e2-8c68-f338f417412f",
+            "issuedAt": "April 28, 2026",
+            "expiresAt": "NA",
+            "skills": ["Amazon EKS" , "Amazon Elastic Kubernetes Service", "Amazon Web Services (AWS)", "AWS", "AWS Cloud", "Containerization", "Kubernetes"]
+
+        },
+        {
+            "name": "Well-Architected Proficient",
+            "issuer": "Amazon Web Services",
+            "imageUrl": "https://images.credly.com/size/340x340/images/b870667f-00a3-48d7-b988-9c02b441b883/image.png",
+            "badgeUrl": "https://www.credly.com/badges/4964c64b-35f7-4d79-a75e-8f9fe3641d64",
+            "issuedAt": "October 03, 2023",
+            "expiresAt": "NA",
+            "skills": ["AWS", "AWS Cloud Best Practices", "AWS Well-Architected Framework", "AWS Well-Architected Tool"]
+        },
+        {
+            "name": "HashiCorp Certified: Terraform Associate (002)",
+            "issuer": "HashiCorp",
+            "imageUrl": "https://images.credly.com/size/340x340/images/cd038261-9d1c-4792-bc62-3a3b5bda175c/blob",
+            "badgeUrl": "https://www.credly.com/badges/25d8f829-d8c2-4195-a48a-7738e4c86256",
+            "issuedAt": "August 11, 2022",
+            "expiresAt": "August 11, 2024",
+            "skills": [ "Cloud Engineer", "HCP Terraform", "Infrastructure As Code", "Infrastructure Automation", "IT Infrastructure", "Multi-Cloud", "Terraform",
+            "Terraform Basics", "Terraform CLI", "Terraform Cloud", "Terraform Configuration", "Terraform Enterprise Awareness", "Terraform Modules", "Terraform Purpose",
+            "Terraform State", "Terraform Workflow"]
+        },
+        {
+            "name": "AWS Certified Solutions Architect – Associate",
+            "issuer": "Amazon Web Services",
+            "imageUrl": "https://images.credly.com/size/340x340/images/0e284c3f-5164-4b21-8660-0d84737941bc/image.png",
+            "badgeUrl": "https://www.credly.com/badges/e0ff72e3-5a9b-4f54-ac2b-cccd3451caaf",
+            "issuedAt": "December 22, 2020",
+            "expiresAt": "December 22, 2023",
+            "skills": ["Amazon Web Services", "AWS", "AWS Certification", "AWS Cloud", "Cloud Architecture", "Cloud Certification", "Cloud Data", "Cloud Infrastructure", "Cloud Services"]
+        }
+    ]
+}

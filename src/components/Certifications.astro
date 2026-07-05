@@ -1,0 +1,373 @@
+---
+// src/components/Certifications.astro
+// Drop this component inside experience.astro inside the <aside> after the tech stack grid
+
+import badgesData from '../data/badges.json';
+
+const { credlyUrl, badges } = badgesData;
+
+// Separate active vs expired
+const active  = badges.filter(b => b.expiresAt === 'NA' || new Date(b.expiresAt) > new Date());
+const expired = badges.filter(b => b.expiresAt !== 'NA' && new Date(b.expiresAt) <= new Date());
+---
+
+<div class="certifications space-y-6">
+
+  <!-- Section heading -->
+  <h2 class="font-headline-md text-headline-md text-primary flex items-center gap-3">
+    <span class="material-symbols-outlined text-primary-container">verified</span>
+    Certifications
+  </h2>
+
+  <!-- Badge list -->
+  <div class="cert-list space-y-4">
+
+    {active.map(badge => (
+      <a
+        href={badge.badgeUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="cert-card group"
+      >
+        <!-- Badge image -->
+        <div class="cert-card__img-wrap">
+          <img
+            src={badge.imageUrl}
+            alt={badge.name}
+            width="56"
+            height="56"
+            loading="lazy"
+            class="cert-card__img"
+          />
+          <div class="cert-card__glow"></div>
+        </div>
+
+        <!-- Badge info -->
+        <div class="cert-card__info">
+          <p class="cert-card__name">{badge.name}</p>
+          <p class="cert-card__issuer">{badge.issuer}</p>
+          <div class="cert-card__meta">
+            <span class="cert-meta-chip cert-meta-chip--issued">
+              <span class="material-symbols-outlined" style="font-size:12px">calendar_today</span>
+              {badge.issuedAt}
+            </span>
+            {badge.expiresAt === 'NA' ? (
+              <span class="cert-meta-chip cert-meta-chip--noexpiry">NO EXPIRY</span>
+            ) : (
+              <span class="cert-meta-chip cert-meta-chip--expires">
+                EXPIRES {badge.expiresAt}
+              </span>
+            )}
+          </div>
+        </div>
+
+        <!-- Arrow icon -->
+        <span class="material-symbols-outlined cert-card__arrow">arrow_outward</span>
+      </a>
+    ))}
+
+    {/* Expired badges collapsed */}
+    {expired.length > 0 && (
+      <details class="cert-expired">
+        <summary class="cert-expired__toggle">
+          <span class="material-symbols-outlined" style="font-size:14px">history</span>
+          {expired.length} expired {expired.length === 1 ? 'certification' : 'certifications'}
+          <span class="material-symbols-outlined cert-expired__chevron">expand_more</span>
+        </summary>
+        <div class="cert-expired__list space-y-3 mt-3">
+          {expired.map(badge => (
+            <a
+              href={badge.badgeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="cert-card cert-card--expired group"
+            >
+              <div class="cert-card__img-wrap cert-card__img-wrap--expired">
+                <img
+                  src={badge.imageUrl}
+                  alt={badge.name}
+                  width="48"
+                  height="48"
+                  loading="lazy"
+                  class="cert-card__img cert-card__img--expired"
+                />
+              </div>
+              <div class="cert-card__info">
+                <p class="cert-card__name cert-card__name--expired">{badge.name}</p>
+                <p class="cert-card__issuer">{badge.issuer}</p>
+                <div class="cert-card__meta">
+                  <span class="cert-meta-chip cert-meta-chip--expired-label">
+                    EXPIRED {badge.expiresAt}
+                  </span>
+                </div>
+              </div>
+              <span class="material-symbols-outlined cert-card__arrow cert-card__arrow--dim">arrow_outward</span>
+            </a>
+          ))}
+        </div>
+      </details>
+    )}
+
+  </div>
+
+  <!-- See more on Credly -->
+  <a
+    href={credlyUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="cert-see-more"
+  >
+    <img
+      src="https://info.credly.com/hubfs/Credly-Logo-Orange-White.svg"
+      alt="Credly"
+      height="16"
+      class="cert-see-more__logo"
+      onerror="this.style.display='none'"
+    />
+    <span>View all badges on Credly</span>
+    <span class="material-symbols-outlined" style="font-size:16px">arrow_outward</span>
+  </a>
+
+</div>
+
+<style>
+  /* ── Card ─────────────────────────────────────────────── */
+  .cert-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 16px;
+    background: rgba(13, 21, 21, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 242, 255, 0.15);
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 250ms ease, box-shadow 250ms ease, transform 150ms ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cert-card:hover {
+    border-color: rgba(0, 242, 255, 0.5);
+    box-shadow: 0 0 20px rgba(0, 242, 255, 0.06);
+    transform: translateX(4px);
+  }
+
+  .cert-card--expired {
+    border-color: rgba(58, 73, 75, 0.3);
+    opacity: 0.6;
+  }
+
+  .cert-card--expired:hover {
+    border-color: rgba(132, 148, 149, 0.4);
+    box-shadow: none;
+    opacity: 0.8;
+  }
+
+  /* ── Image ────────────────────────────────────────────── */
+  .cert-card__img-wrap {
+    position: relative;
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+  }
+
+  .cert-card__img-wrap--expired {
+    width: 48px;
+    height: 48px;
+    filter: grayscale(1);
+    opacity: 0.5;
+  }
+
+  .cert-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 6px;
+    transition: transform 250ms ease;
+  }
+
+  .cert-card:hover .cert-card__img { transform: scale(1.05); }
+
+  .cert-card__glow {
+    position: absolute;
+    inset: -4px;
+    border-radius: 10px;
+    background: radial-gradient(circle, rgba(0, 242, 255, 0.15) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 250ms ease;
+    pointer-events: none;
+  }
+
+  .cert-card:hover .cert-card__glow { opacity: 1; }
+
+  /* ── Info ─────────────────────────────────────────────── */
+  .cert-card__info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .cert-card__name {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--on-surface);
+    line-height: 1.3;
+    transition: color 150ms ease;
+  }
+
+  .cert-card__name--expired { color: var(--on-surface-variant); }
+
+  .cert-card:hover .cert-card__name { color: var(--primary-container); }
+  .cert-card--expired:hover .cert-card__name { color: var(--on-surface-variant); }
+
+  .cert-card__issuer {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--outline);
+    text-transform: uppercase;
+  }
+
+  .cert-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+  }
+
+  /* ── Meta chips ───────────────────────────────────────── */
+  .cert-meta-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 0;
+  }
+
+  .cert-meta-chip--issued {
+    color: var(--on-surface-variant);
+    border: 1px solid rgba(58, 73, 75, 0.5);
+  }
+
+  .cert-meta-chip--noexpiry {
+    color: var(--secondary-container);
+    border: 1px solid rgba(47, 248, 1, 0.3);
+    background: rgba(47, 248, 1, 0.06);
+  }
+
+  .cert-meta-chip--expires {
+    color: var(--tertiary-fixed-dim);
+    border: 1px solid rgba(235, 178, 255, 0.3);
+  }
+
+  .cert-meta-chip--expired-label {
+    color: var(--error);
+    border: 1px solid rgba(255, 180, 171, 0.3);
+  }
+
+  /* ── Arrow ────────────────────────────────────────────── */
+  .cert-card__arrow {
+    font-size: 16px;
+    color: var(--outline);
+    flex-shrink: 0;
+    transition: color 150ms ease, transform 150ms ease;
+  }
+
+  .cert-card:hover .cert-card__arrow {
+    color: var(--primary-container);
+    transform: translate(2px, -2px);
+  }
+
+  .cert-card__arrow--dim { color: rgba(132, 148, 149, 0.4); }
+
+  /* ── Expired collapse ─────────────────────────────────── */
+  .cert-expired {
+    border: 1px solid rgba(58, 73, 75, 0.3);
+    border-radius: 8px;
+    padding: 10px 14px;
+    background: rgba(13, 21, 21, 0.4);
+  }
+
+  .cert-expired__toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--outline);
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+
+  .cert-expired__toggle::-webkit-details-marker { display: none; }
+
+  .cert-expired__chevron {
+    font-size: 16px;
+    margin-left: auto;
+    transition: transform 250ms ease;
+  }
+
+  details[open] .cert-expired__chevron { transform: rotate(180deg); }
+
+  /* ── See more ─────────────────────────────────────────── */
+  .cert-see-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 20px;
+    background: transparent;
+    border: 1px solid rgba(0, 242, 255, 0.2);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--primary-container);
+    text-decoration: none;
+    transition: all 250ms ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cert-see-more::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(0, 242, 255, 0.04), transparent);
+    transform: translateX(-100%);
+    transition: transform 400ms ease;
+  }
+
+  .cert-see-more:hover {
+    border-color: var(--primary-container);
+    box-shadow: 0 0 16px rgba(0, 242, 255, 0.12);
+  }
+
+  .cert-see-more:hover::before { transform: translateX(100%); }
+
+  .cert-see-more__logo {
+    height: 16px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.7;
+  }
+</style>
