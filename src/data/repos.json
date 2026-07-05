@@ -2,7 +2,7 @@
   {
     "name": "portfolio",
     "fullName": "sithilaKonara/portfolio",
-    "description": "",
+    "description": "Static portfolio website built with Astro, automatically fetching the latest Medium articles and GitHub repositories.",
     "url": "https://github.com/sithilaKonara/portfolio",
     "homepage": "",
     "stars": 0,
@@ -18,7 +18,7 @@
     "updatedAt": "Today",
     "openIssues": 0,
     "languages": {
-      "Astro": 82032,
+      "Astro": 82021,
       "JavaScript": 9863,
       "Python": 8038,
       "CSS": 2304
