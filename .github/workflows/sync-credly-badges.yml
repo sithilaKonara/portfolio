@@ -1,0 +1,49 @@
+# .github/workflows/sync-credly-badges.yml
+#
+# Fetches public Credly badge data and commits badges.json only if changed.
+#
+# Required repo secret (Settings → Secrets → Actions):
+#   CREDLY_USER_ID — your Credly UUID: b97fb7c2-3a3d-48ac-b1ad-5c9a970e8ffd
+
+name: Sync Credly Badges
+
+on:
+  schedule:
+    - cron: '0 7 1 * *'  # daily 07:00 UTC = 10:00 Helsinki (1hr after GitHub sync)
+  workflow_dispatch:       # manual run from Actions tab
+
+jobs:
+  fetch-and-commit:
+    name: Fetch Credly badges and commit if changed
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run fetch-credly.py
+        env:
+            CREDLY_USER_ID: ${{ secrets.CREDLY_USER_ID }}
+        run: |
+          python3 scripts/fetch-credly.py \
+            --user-id ${{ env.CREDLY_USER_ID }}
+
+      - name: Commit only if badges changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add src/data/badges.json
+
+          if git diff --cached --quiet; then
+            echo "✓ No badge changes detected — skipping commit"
+          else
+            echo "Changes detected:"
+            git diff --cached --stat
+            git commit -m "chore(data): sync Credly badges $(date -u '+%Y-%m-%d') [skip ci]"
+            git push
+            echo "✓ Pushed updated badges"
+          fi
