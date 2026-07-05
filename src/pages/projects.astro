@@ -15,19 +15,19 @@ const GITHUB_USERNAME = "sithilakonara";
 
 // Language colour map (matches fetch-github.py)
 const LANG_COLORS: Record<string, string> = {
-  "Python":     "#3572A5",
+  "Python": "#3572A5",
   "TypeScript": "#3178C6",
   "JavaScript": "#F1E05A",
-  "Go":         "#00ADD8",
-  "Rust":       "#CE422B",
-  "HCL":        "#844FBA",
-  "Shell":      "#89E051",
+  "Go": "#00ADD8",
+  "Rust": "#CE422B",
+  "HCL": "#844FBA",
+  "Shell": "#89E051",
   "Dockerfile": "#384D54",
-  "HTML":       "#E34C26",
-  "CSS":        "#563D7C",
-  "Java":       "#B07219",
-  "C++":        "#F34B7D",
-  "Other":      "#849495"
+  "HTML": "#E34C26",
+  "CSS": "#563D7C",
+  "Java": "#B07219",
+  "C++": "#F34B7D",
+  "Other": "#849495"
 };
 ---
 
@@ -39,10 +39,10 @@ const LANG_COLORS: Record<string, string> = {
     <header class="text-center md:text-left space-y-8 mb-16">
       <StatusBadge label="STATUS: OPEN TO OPPORTUNITIES" />
       <h1 class="font-display text-display text-primary uppercase tracking-tighter">
-        PROJECTS 
-      </h1>    
+        PROJECTS
+      </h1>
       <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl border-l-4 border-primary-container pl-6">
-        I build because production breaks. I share because someone else's fix might be the one I need tomorrow. 
+        I build because production breaks. I share because someone else's fix might be the one I need tomorrow.
         Every repo here is a lesson learned the hard way turned into code so we both get smarter, faster.
       </p>
     </header>
@@ -106,7 +106,7 @@ const LANG_COLORS: Record<string, string> = {
                         const total = Object.values(repo.languages).reduce((a, b) => a + b, 0);
                         const entries = Object.entries(repo.languages)
                           .sort((a, b) => b[1] - a[1])
-                          .slice(0, 8); // show top 8 languages (can remove slice for all)
+                          .slice(0, 8);
                         return entries.map(([lang, bytes]) => {
                           const percent = (bytes / total) * 100;
                           const color = LANG_COLORS[lang] || LANG_COLORS["Other"];
@@ -141,9 +141,9 @@ const LANG_COLORS: Record<string, string> = {
                   <span class="opacity-50">$</span> git clone <span class="break-all">{url}</span> <br />
                   <span class="opacity-50">[OK]</span> Updated: {updatedAt}
                 </div>
-                <a 
-                  href={url} 
-                  target="_blank" 
+                <a
+                  href={url}
+                  target="_blank"
                   rel="noopener noreferrer"
                   class="w-full py-4 border border-primary-fixed text-primary-fixed font-label-caps text-label-caps hover:bg-primary-fixed hover:text-on-primary shadow-[0_0_0px_#74f5ff] hover:shadow-[0_0_20px_rgba(116,245,255,0.4)] transition-all text-center"
                 >
@@ -158,20 +158,25 @@ const LANG_COLORS: Record<string, string> = {
     
     <!-- STATISTICS SECTION -->
     <section class="mb-24">
+      <!-- 👇 Heading stays visible on all screens -->
       <h2 class="font-label-caps text-label-caps text-primary-fixed-dim tracking-widest mb-8 flex items-center gap-3">
         <span class="material-symbols-outlined">analytics</span> GITHUB_ANALYTICS
       </h2>
-      <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
-        <div class="lg:col-span-2 glass-panel p-8">
-          <div class="flex justify-between items-center mb-6">
-            <span class="font-code-sm text-on-surface-variant">Contribution Matrix (365 Days)</span>
+
+      <!-- 👇 Graph container hidden on mobile, visible on md+ -->
+      <div class="hidden md:block">
+        <div class="grid grid-cols-1 lg:grid-cols-1 gap-8">
+          <div class="lg:col-span-2 glass-panel p-8">
+            <div class="flex justify-between items-center mb-6">
+              <span class="font-code-sm text-on-surface-variant">Contribution Matrix (365 Days)</span>
+            </div>
+            <GithubActivity user={GITHUB_USERNAME} theme="dark" />
           </div>
-          <GithubActivity user={GITHUB_USERNAME} theme="dark" />
         </div>
       </div>
       
       {statsData && typeof statsData === 'object' && (
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
           <GlassPanel class="p-6 border-l-4 border-l-primary-container flex flex-col justify-between">
             <span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Total Repos</span>
             <div class="mt-2">
@@ -212,18 +217,20 @@ const LANG_COLORS: Record<string, string> = {
     </section>
     
     <!-- CALL TO ACTION -->
-    <section class="glass-panel p-16 text-center relative overflow-hidden border-primary-fixed/30 shadow-[0_0_30px_rgba(116,245,255,0.05)]">
+    <section class="glass-panel p-6 md:p-12 lg:p-16 text-center relative overflow-hidden border-primary-fixed/30 shadow-[0_0_30px_rgba(116,245,255,0.05)]">
       <div class="absolute inset-0 bg-gradient-to-t from-primary-fixed/5 to-transparent"></div>
       <div class="relative z-10">
-        <h2 class="font-display text-display text-primary-fixed uppercase mb-4">WANT_TO_COLLABORATE?</h2>
+        <h2 class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-display text-primary-fixed uppercase mb-4">
+          WANT_TO_COLLABORATE?
+        </h2>
         <p class="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-xl mx-auto">
           ___________________________________________
         </p>
-        <a 
-          href="https://github.com/sithilaKonara?tab=repositories" 
-          target="_blank" 
+        <a
+          href="https://github.com/sithilaKonara?tab=repositories"
+          target="_blank"
           rel="noopener noreferrer"
-          class="group px-8 py-4 bg-primary-fixed text-on-primary-fixed font-label-caps text-[16px] font-bold uppercase tracking-widest hover:shadow-[0_0_30px_#74f5ff] transition-all flex items-center justify-center gap-3 mx-auto w-fit"
+          class="group px-6 sm:px-8 py-4 bg-primary-fixed text-on-primary-fixed font-label-caps text-sm sm:text-base font-bold uppercase tracking-widest hover:shadow-[0_0_30px_#74f5ff] transition-all flex items-center justify-center gap-3 mx-auto w-fit"
         >
           [Open GitHub]
           <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
