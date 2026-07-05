@@ -28,6 +28,7 @@ jobs:
         env:
             CREDLY_USER_ID: ${{ secrets.CREDLY_USER_ID }}
         run: |
+          echo "Fetching Credly badges for user ID: ${{ env.CREDLY_USER_ID }}"
           python3 scripts/fetch-credly.py \
             --user-id ${{ env.CREDLY_USER_ID }}
 
