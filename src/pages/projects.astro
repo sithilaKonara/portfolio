@@ -12,6 +12,23 @@ const repos = Array.isArray(reposData) ? reposData : [];
 repos.sort((a, b) => (b.stars || 0) - (a.stars || 0));
 
 const GITHUB_USERNAME = "sithilakonara";
+
+// Language colour map (matches fetch-github.py)
+const LANG_COLORS: Record<string, string> = {
+  "Python":     "#3572A5",
+  "TypeScript": "#3178C6",
+  "JavaScript": "#F1E05A",
+  "Go":         "#00ADD8",
+  "Rust":       "#CE422B",
+  "HCL":        "#844FBA",
+  "Shell":      "#89E051",
+  "Dockerfile": "#384D54",
+  "HTML":       "#E34C26",
+  "CSS":        "#563D7C",
+  "Java":       "#B07219",
+  "C++":        "#F34B7D",
+  "Other":      "#849495"
+};
 ---
 
 <Layout title="Sithila Konara | Projects">
@@ -30,7 +47,7 @@ const GITHUB_USERNAME = "sithilakonara";
       </p>
     </header>
     
-    <!-- PROJECT GRID – now using equal columns -->
+    <!-- PROJECT GRID -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
       {
         repos.map((repo, index) => {
@@ -79,7 +96,47 @@ const GITHUB_USERNAME = "sithilakonara";
                 <p class="text-on-surface-variant mb-8 leading-relaxed font-body-md flex-grow">
                   {description}
                 </p>
-                <!-- Fixed overflow: added break-all and max-width -->
+
+                {/* ✨ LANGUAGE BREAKDOWN BAR + LEGEND */}
+                {repo.languages && Object.keys(repo.languages).length > 0 && (
+                  <div class="mt-4 mb-4">
+                    {/* The bar */}
+                    <div class="flex h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+                      {(() => {
+                        const total = Object.values(repo.languages).reduce((a, b) => a + b, 0);
+                        const entries = Object.entries(repo.languages)
+                          .sort((a, b) => b[1] - a[1])
+                          .slice(0, 8); // show top 8 languages (can remove slice for all)
+                        return entries.map(([lang, bytes]) => {
+                          const percent = (bytes / total) * 100;
+                          const color = LANG_COLORS[lang] || LANG_COLORS["Other"];
+                          return <div class="h-full" style={{ width: `${percent}%`, backgroundColor: color }} title={`${lang}: ${percent.toFixed(1)}%`} />;
+                        });
+                      })()}
+                    </div>
+                    {/* Legend */}
+                    <div class="flex flex-wrap gap-x-4 gap-y-1 mt-2">
+                      {(() => {
+                        const total = Object.values(repo.languages).reduce((a, b) => a + b, 0);
+                        const entries = Object.entries(repo.languages)
+                          .sort((a, b) => b[1] - a[1])
+                          .slice(0, 8);
+                        return entries.map(([lang, bytes]) => {
+                          const percent = (bytes / total) * 100;
+                          const color = LANG_COLORS[lang] || LANG_COLORS["Other"];
+                          return (
+                            <span class="flex items-center gap-1.5 font-code-xs text-[10px] text-on-surface-variant">
+                              <span class="inline-block w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: color }}></span>
+                              {lang} <span class="text-primary-fixed/60">{percent.toFixed(1)}%</span>
+                            </span>
+                          );
+                        });
+                      })()}
+                    </div>
+                  </div>
+                )}
+
+                {/* Terminal block */}
                 <div class="bg-surface-container-lowest p-4 rounded border border-outline-variant font-code-xs text-secondary-fixed mb-8 overflow-hidden">
                   <span class="opacity-50">$</span> git clone <span class="break-all">{url}</span> <br />
                   <span class="opacity-50">[OK]</span> Updated: {updatedAt}
@@ -99,7 +156,7 @@ const GITHUB_USERNAME = "sithilakonara";
       }
     </div>
     
-    <!-- STATISTICS SECTION (unchanged) -->
+    <!-- STATISTICS SECTION -->
     <section class="mb-24">
       <h2 class="font-label-caps text-label-caps text-primary-fixed-dim tracking-widest mb-8 flex items-center gap-3">
         <span class="material-symbols-outlined">analytics</span> GITHUB_ANALYTICS
@@ -154,7 +211,7 @@ const GITHUB_USERNAME = "sithilakonara";
       )}
     </section>
     
-    <!-- CALL TO ACTION (unchanged) -->
+    <!-- CALL TO ACTION -->
     <section class="glass-panel p-16 text-center relative overflow-hidden border-primary-fixed/30 shadow-[0_0_30px_rgba(116,245,255,0.05)]">
       <div class="absolute inset-0 bg-gradient-to-t from-primary-fixed/5 to-transparent"></div>
       <div class="relative z-10">

@@ -68,7 +68,7 @@ def main(username: str, token: str):
     repos = []
     total_stars = 0
     total_forks = 0
-    lang_bytes: dict = defaultdict(int)
+    total_lang_bytes: dict = defaultdict(int)   # overall bytes
 
     for r in raw:
         if r.get("fork") or r.get("archived"):
@@ -81,10 +81,10 @@ def main(username: str, token: str):
 
         lang = r.get("language") or "Other"
 
-        # Per-repo language breakdown for global chart
+        # Per-repo language breakdown (bytes)
         lang_data = gh_get(f"/repos/{username}/{r['name']}/languages", token, username) or {}
         for l, b in lang_data.items():
-            lang_bytes[l] += b
+            total_lang_bytes[l] += b
 
         # Human-readable updated date
         upd_raw = r.get("updated_at", "")
@@ -115,6 +115,7 @@ def main(username: str, token: str):
             "topics":      r.get("topics", [])[:4],
             "updatedAt":   updated,
             "openIssues":  r.get("open_issues_count", 0),
+            "languages":   lang_data,   # <-- NEW: per-repo byte counts
         })
 
     repos.sort(key=lambda x: x["stars"], reverse=True)
@@ -139,10 +140,10 @@ def main(username: str, token: str):
     print(f"  ✓ {len(contributions)} days of contribution data")
 
     # ── 3. Language percentages ────────────────────────────────
-    total_bytes = sum(lang_bytes.values()) or 1
+    total_bytes = sum(total_lang_bytes.values()) or 1
     languages = {
         lang: round(b / total_bytes * 100, 1)
-        for lang, b in sorted(lang_bytes.items(), key=lambda x: -x[1])
+        for lang, b in sorted(total_lang_bytes.items(), key=lambda x: -x[1])
     }
     print(f"  ✓ Languages: {list(languages.keys())[:5]}")
 
@@ -173,7 +174,8 @@ def main(username: str, token: str):
         "totalRepos":    len(repos),
         "totalCommits":  total_commits,
         "contributions": contributions,
-        "languages":     languages,
+        "languages":     languages,                 # percentages
+        "languageBytes": dict(total_lang_bytes),    # <-- NEW: raw bytes
         "fetchedAt":     datetime.now(timezone.utc).isoformat(),
     }
     STATS_OUT.write_text(json.dumps(stats, indent=2, ensure_ascii=False))

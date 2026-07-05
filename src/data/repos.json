@@ -1,72 +1,72 @@
 [
   {
-    "name": "portfolio",
-    "fullName": "sithilaKonara/portfolio",
-    "description": "",
-    "url": "https://github.com/sithilaKonara/portfolio",
+    "name": "terraform-aws-ecs",
+    "fullName": "sithila/terraform-aws-ecs",
+    "description": "Production-ready ECS cluster on AWS with Terraform",
+    "url": "https://github.com/sithila/terraform-aws-ecs",
+    "homepage": "https://docs.example.com",
+    "stars": 342,
+    "forks": 87,
+    "language": "HCL",
+    "langColor": "#844FBA",
+    "topics": [
+      "aws",
+      "terraform",
+      "ecs",
+      "devops"
+    ],
+    "updatedAt": "2w ago",
+    "openIssues": 3,
+    "languages": {
+      "HCL": 19616,
+      "Python": 2048,
+      "Shell": 512
+    }
+  },
+  {
+    "name": "nextjs-dashboard",
+    "fullName": "sithila/nextjs-dashboard",
+    "description": "Full-stack dashboard with Next.js and Tailwind",
+    "url": "https://github.com/sithila/nextjs-dashboard",
     "homepage": "",
-    "stars": 0,
-    "forks": 0,
-    "language": "Astro",
-    "langColor": "#849495",
-    "topics": [],
+    "stars": 124,
+    "forks": 31,
+    "language": "TypeScript",
+    "langColor": "#3178C6",
+    "topics": [
+      "nextjs",
+      "react",
+      "tailwindcss"
+    ],
     "updatedAt": "Today",
-    "openIssues": 0
+    "openIssues": 1,
+    "languages": {
+      "TypeScript": 7816,
+      "JavaScript": 818,
+      "HTML": 366,
+      "CSS": 240
+    }
   },
   {
-    "name": "sithilaKonara",
-    "fullName": "sithilaKonara/sithilaKonara",
-    "description": "",
-    "url": "https://github.com/sithilaKonara/sithilaKonara",
-    "homepage": "",
-    "stars": 0,
-    "forks": 0,
-    "language": "Other",
-    "langColor": "#849495",
-    "topics": [],
-    "updatedAt": "Dec 2025",
-    "openIssues": 0
-  },
-  {
-    "name": "sk_aws_vpc_2t_template",
-    "fullName": "sithilaKonara/sk_aws_vpc_2t_template",
-    "description": "Terraform module for build aws vpc for two  tire architecture",
-    "url": "https://github.com/sithilaKonara/sk_aws_vpc_2t_template",
-    "homepage": "",
-    "stars": 0,
-    "forks": 0,
-    "language": "HCL",
-    "langColor": "#844FBA",
-    "topics": [],
-    "updatedAt": "Feb 2025",
-    "openIssues": 0
-  },
-  {
-    "name": "youtube_downloader",
-    "fullName": "sithilaKonara/youtube_downloader",
-    "description": "",
-    "url": "https://github.com/sithilaKonara/youtube_downloader",
-    "homepage": "",
-    "stars": 0,
-    "forks": 0,
-    "language": "HCL",
-    "langColor": "#844FBA",
-    "topics": [],
-    "updatedAt": "Oct 2023",
-    "openIssues": 0
-  },
-  {
-    "name": "aws_terraform_project",
-    "fullName": "sithilaKonara/aws_terraform_project",
-    "description": "",
-    "url": "https://github.com/sithilaKonara/aws_terraform_project",
-    "homepage": "",
-    "stars": 0,
-    "forks": 0,
-    "language": "Python",
-    "langColor": "#3572A5",
-    "topics": [],
-    "updatedAt": "Sep 2023",
-    "openIssues": 0
+    "name": "personal-blog",
+    "fullName": "sithila/personal-blog",
+    "description": "My personal blog built with Hugo",
+    "url": "https://github.com/sithila/personal-blog",
+    "homepage": "https://blog.example.com",
+    "stars": 12,
+    "forks": 3,
+    "language": "HTML",
+    "langColor": "#E34C26",
+    "topics": [
+      "hugo",
+      "blog"
+    ],
+    "updatedAt": "Jan 2025",
+    "openIssues": 0,
+    "languages": {
+      "HTML": 15000,
+      "CSS": 3200,
+      "JavaScript": 600
+    }
   }
 ]
