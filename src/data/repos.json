@@ -9,7 +9,12 @@
     "forks": 0,
     "language": "Astro",
     "langColor": "#849495",
-    "topics": [],
+    "topics": [
+      "github-api",
+      "medium-api",
+      "portfolio-website",
+      "static-website"
+    ],
     "updatedAt": "Today",
     "openIssues": 0,
     "languages": {
