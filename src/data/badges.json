@@ -1,0 +1,24 @@
+{
+    "credlyUrl": "https://www.credly.com/users/sithila-konara",
+    "badges": [
+        {
+            "name": "AWS Knowledge: Amazon EKS - Training Badge",
+            "issuer": "Amazon Web Services",
+            "imageUrl": "https://images.credly.com/size/340x340/images/f5efafe6-ebdc-485c-9ffa-3a05533e634b/blob",
+            "badgeUrl": "https://www.credly.com/badges/ba3278c0-bf26-47e2-8c68-f338f417412f",
+            "issuedAt": "April 28, 2026",
+            "expiresAt": "NA",
+            "skills": ["Amazon EKS" , "Amazon Elastic Kubernetes Service", "Amazon Web Services (AWS)", "AWS", "AWS Cloud", "Containerization", "Kubernetes"]
+
+        },
+        {
+            "name": "Well-Architected Proficient",
+            "issuer": "Amazon Web Services",
+            "imageUrl": "https://images.credly.com/size/340x340/images/b870667f-00a3-48d7-b988-9c02b441b883/image.png",
+            "badgeUrl": "https://www.credly.com/badges/4964c64b-35f7-4d79-a75e-8f9fe3641d64",
+            "issuedAt": "October 03, 2023",
+            "expiresAt": "NA",
+            "skills": ["AWS", "AWS Cloud Best Practices", "AWS Well-Architected Framework", "AWS Well-Architected Tool"]
+        }
+    ]
+}
