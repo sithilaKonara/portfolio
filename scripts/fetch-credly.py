@@ -64,4 +64,5 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("--user-id", required=True)
     args = p.parse_args()
+    print(f"Fetching Credly badges for user ID: {args.user_id}")
     fetch(args.user_id)
