@@ -1,0 +1,106 @@
+{
+  "metrics": [
+    {
+      "label": "Uptime",
+      "value": "99.99%"
+    },
+    {
+      "label": "Servers",
+      "value": "3000+"
+    },
+    {
+      "label": "Cost Saved",
+      "value": "30% FINOPs"
+    },
+    {
+      "label": "Toil Reduced",
+      "value": "35% AUTOMATION"
+    }
+  ],
+
+  "workExperience": [
+    {
+      "period": "2024 - CURRENT",
+      "role": "Site Reliability Engineer",
+      "company": "HCLTECH",
+      "description": "I design secure, self-service infrastructure that handles the complexity of global scale so engineers can focus on shipping code. By combining least-privilege IAM with dynamic secrets management, I've created environments that are both bulletproof and frictionless reducing security headaches and deployment delays.",
+      "highlights": [
+        "Built self-service tools eliminating manual workflows – improved team efficiency by 30%.",
+        "Designed secure, automated CI/CD pipelines with GitHub Actions."
+      ]
+    },
+    {
+      "period": "2022 - 2023",
+      "role": "Associate Technical Specialist",
+      "company": "PEARSON",
+      "description": "Architected and deployed robust, scalable cloud infrastructure using the Well-Architected Framework with a focus on security and high availability. Drove FinOps initiatives surfacing cost visibility to engineering teams.",
+      "highlights": [
+        "Reduced monthly cloud spend by 30% through proactive resource optimization.",
+        "Implemented Infrastructure-as-Code with Terraform – achieved 1-day RTO in disaster recovery."
+      ]
+    },
+    {
+      "period": "2018 - 2022",
+      "role": "Senior System Engineer",
+      "company": "PEARSON",
+      "description": "Operated and maintained large-scale hybrid cloud platforms (3000+ servers) with 99% availability. Built observability standards and conducted root cause analysis for service outages.",
+      "highlights": [
+        "Automated patching processes – achieved 90% success rate, reducing manual effort by 80%.",
+        "Managed large-scale EOL server migrations, reducing EOL footprint by 35%."
+      ]
+    },
+    {
+      "period": "2016 - 2018",
+      "role": "Infrastructure Management Engineer",
+      "company": "INVOLVE 360",
+      "description": "Provided NOC support to MSPs in the US, UK, Australia, and Canada. Troubleshot server infrastructure issues, performed server migrations, and implemented monitoring best practices.",
+      "highlights": [
+        "Managed Windows/VMware/Hyper-V/Azure environments for global clients.",
+        "Implemented proactive monitoring and alerting for critical infrastructure."
+      ]
+    },
+    {
+      "period": "2015 - 2016",
+      "role": "Systems Engineer",
+      "company": "KBSL INFORMATION TECHNOLOGIES",
+      "description": "Administered ISP core network infrastructure, configuring IP networking, routing protocols, high availability, VPNs, and firewalling to enforce network security.",
+      "highlights": [
+        "Managed Cisco IOS XR, Juniper EX4550, and Palo Alto 5050 firewalls.",
+        "Configured VLANs, NAT, EBGP/IBGP, and system hardening (ACLs)."
+      ]
+    },
+    {
+      "period": "2013 - 2015",
+      "role": "System Support Technician",
+      "company": "99X SERVICES",
+      "description": "Provided system support and maintenance for enterprise clients, troubleshooting hardware and software issues in mixed Windows/Linux environments.",
+      "highlights": [
+        "Resolved critical system incidents, ensuring minimal downtime.",
+        "Assisted in server deployment and routine maintenance tasks."
+      ]
+    }
+  ],
+  "techStack": {
+    "cloudInfra": ["AWS", "GCP"],
+    "devOpsTooling": [
+      "TERRAFORM",
+      "ANSIBLE",
+      "KUBERNETES",
+      "DOCKER",
+      "GITHUB ACTIONS"
+    ],
+    "languages": ["PYTHON", "BASH"],
+    "observability": ["CLOUDWATCH", "GRAFANA", "PROMETHEUS"],
+    "security": ["IAM", "VAULT"],
+    "infrastucture": ["LINUX (RHEL, UBUNTU)", "WINDOWS SERVER"],
+    "networking": [
+      "VPC",
+      "DNS",
+      "LOAD BALANCING",
+      "FIREWALLS",
+      "SECURITY GROUPS",
+      "ACL"
+    ],
+    "finOps": ["COST OPTIMIZATION", "COST VISIBILITY"]
+  }
+}
