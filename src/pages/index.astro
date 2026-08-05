@@ -5,6 +5,9 @@ import Footer from "../components/Footer.astro";
 import GlassPanel from "../components/GlassPanel.astro";
 import TerminalHeader from "../components/TerminalHeader.astro";
 import StatusBadge from "../components/StatusBadge.astro";
+import Data from "../data/staticdata.json";
+
+const { home } = Data;
 
 // Import posts from generated JSON
 import posts from "../data/posts.json";
@@ -62,7 +65,7 @@ const getThumbnail = (post: any) => {
           Sithila <span class="text-primary-container">Konara</span> 
         </h1>
         <p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl"> 
-          IT professional in Cloud / DevOps / Platform / SRE domains with experience architecting and operating distributed, mission-critical systems. Passionate about building self-service platforms, automating away toil, driving FinOps (30% cost savings), and embedding security—all while maintaining 99%+ availability at scale. 
+          {home.description}
         </p>
         <div class="flex flex-wrap gap-4 items-center">
           <a 
@@ -137,15 +140,14 @@ const getThumbnail = (post: any) => {
         <h2 class="font-label-caps text-label-caps text-on-surface-variant whitespace-nowrap">TECH_STACK // CORE_COMPETENCIES</h2>
         <div class="h-px w-full bg-outline-variant/30"></div>
       </div>
-      <div class="flex flex-wrap gap-4 justify-center md:justify-start"> 
-        {["AWS/GCP", "Terraform", "Kubernetes", "Python/Bash", "FinOps", "CI/CD"].map((skill, i) => (
-          
-          <div class={`px-6 py-4 glass-panel border-${i % 2 === 0 ? 'primary-container' : 'secondary-container'}/20 flex flex-col gap-2 min-w-[140px] group hover:border-${i % 2 === 0 ? 'primary-container' : 'secondary-container'} transition-all cursor-default`}>
-            <span class={`font-code-xs text-code-xs text-${i % 2 === 0 ? 'primary-container' : 'secondary-container'} opacity-50`}> ENGINEER_{String(i + 1).padStart(2, '0')} </span>
-            <span class="font-code-sm text-code-sm font-bold">{skill}</span>
-          </div>
-        ))}
-      </div>
+      <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+  {home.coreCompetencies.map((comp, i) => (
+    <div class={`px-6 py-4 glass-panel border-${i % 2 === 0 ? 'primary-container' : 'secondary-container'}/20 flex flex-col gap-2 min-w-[140px] group hover:border-${i % 2 === 0 ? 'primary-container' : 'secondary-container'} transition-all cursor-default`}>
+      <span class={`font-code-xs text-code-xs text-${i % 2 === 0 ? 'primary-container' : 'secondary-container'} opacity-50`}>{comp.label}</span>
+      <span class="font-code-sm text-code-sm font-bold">{comp.value}</span>
+    </div>
+  ))}
+</div>
     </section>
 
     <!-- Latest Writings - Dynamic from posts.json -->

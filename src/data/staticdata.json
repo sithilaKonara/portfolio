@@ -1,4 +1,33 @@
 {
+  "home": {
+    "description": "IT professional in Cloud / DevOps / Platform / SRE domains with experience architecting and operating distributed, mission-critical systems. Passionate about building self-service platforms, automating away toil, driving FinOps (30% cost savings), and embedding security—all while maintaining 99%+ availability at scale.",
+    "coreCompetencies": [
+      {
+        "label": "ENGINEER_01",
+        "value": "AWS/GCP"
+      },
+      {
+        "label": "ENGINEER_02",
+        "value": "Terraform/Ansible"
+      },
+      {
+        "label": "ENGINEER_03",
+        "value": "Kubernetes/Docker"
+      },
+      {
+        "label": "ENGINEER_04",
+        "value": "Python/Bash"
+      },
+      {
+        "label": "ENGINEER_05",
+        "value": "CI/CD"
+      },
+      {
+        "label": "ENGINEER_06",
+        "value": "FinOps"
+      }
+    ]
+  },
   "metrics": [
     {
       "label": "Uptime",
