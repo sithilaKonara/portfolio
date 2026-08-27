@@ -35,7 +35,7 @@
     },
     {
       "label": "Servers",
-      "value": "3000+"
+      "value": "6000+"
     },
     {
       "label": "Cost Saved",
@@ -52,7 +52,7 @@
       "period": "2024 - CURRENT",
       "role": "Site Reliability Engineer",
       "company": "HCLTECH",
-      "description": "I design secure, self-service infrastructure that handles the complexity of global scale so engineers can focus on shipping code. By combining least-privilege IAM with dynamic secrets management, I've created environments that are both bulletproof and frictionless reducing security headaches and deployment delays.",
+      "description": "I design and manage global production infrastructure and self-service infrastructure with use of IaC and configuration management that handles the complexity so engineers can focus on shipping code. Also secure them by combining least-privilege IAM with dynamic secrets management, I've created environments that are both bulletproof and frictionless reducing security headaches and deployment delays.",
       "highlights": [
         "Built self-service tools eliminating manual workflows – improved team efficiency by 30%.",
         "Designed secure, automated CI/CD pipelines with GitHub Actions."
